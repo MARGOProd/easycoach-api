@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Security\Core\User\UserInterface;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -91,17 +92,17 @@ class User
         return $this;
     }
 
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
+    // public function getPassword(): ?string
+    // {
+    //     return $this->password;
+    // }
 
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
+    // public function setPassword(string $password): self
+    // {
+    //     $this->password = $password;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getRoles(): ?array
     {
@@ -126,4 +127,54 @@ class User
 
         return $this;
     }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return (string) $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        $this->plainPassword = null;
+    }
+
+
+    /**
+     * @see UserInterface
+     */
+    public function getUserIdentifier()
+    {
+        return (string) $this->email;
+    }
+
+     /**
+     * @see UserInterface
+     */
+    public function getUsername()
+    {
+        return (string) $this->nom;
+    }
+    
+    
 }
