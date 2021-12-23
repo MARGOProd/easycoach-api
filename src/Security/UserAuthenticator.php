@@ -55,15 +55,14 @@ class UserAuthenticator extends AbstractGuardAuthenticator
         }
 
         $user = $this->em->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
-
         return $user;
     }
 
     public function checkCredentials($credentials, UserInterface $user)
     {
         // Check credentials - e.g. make sure the password is valid.
-        return true; 
-        // return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        //return true; 
+        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)

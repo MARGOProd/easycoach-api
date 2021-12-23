@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -50,6 +52,16 @@ class User implements UserInterface
      * @ORM\JoinColumn(nullable=false)
      */
     private $marque;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Device::class, mappedBy="User")
+     */
+    private $devices;
+
+    public function __construct()
+    {
+        $this->devices = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -174,6 +186,36 @@ class User implements UserInterface
     public function getUsername()
     {
         return (string) $this->nom;
+    }
+
+    /**
+     * @return Collection|Device[]
+     */
+    public function getDevices(): Collection
+    {
+        return $this->devices;
+    }
+
+    public function addDevice(Device $device): self
+    {
+        if (!$this->devices->contains($device)) {
+            $this->devices[] = $device;
+            $device->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevice(Device $device): self
+    {
+        if ($this->devices->removeElement($device)) {
+            // set the owning side to null (unless already changed)
+            if ($device->getUser() === $this) {
+                $device->setUser(null);
+            }
+        }
+
+        return $this;
     }
     
     
