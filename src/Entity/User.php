@@ -54,7 +54,7 @@ class User implements UserInterface
     private $marque;
 
     /**
-     * @ORM\OneToMany(targetEntity=Device::class, mappedBy="User")
+     * @ORM\OneToMany(targetEntity=Device::class, mappedBy="user")
      */
     private $devices;
 

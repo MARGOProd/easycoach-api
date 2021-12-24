@@ -19,6 +19,25 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    /**
+     * Récupère un User par son Device
+     */
+    public function findUserByDeviceKey($key)
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->select(array('u'))
+            ->join(
+                'App\Entity\Device',
+                'd',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'd.user = u'
+            )
+            ->andWhere('d.deviceKey = :deviceKey')
+            ->setParameter('deviceKey', $key);
+        $user = $qb->getQuery()->getOneOrNullResult();
+        return $user;
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
