@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -29,11 +30,12 @@ class AccountController extends AbstractController
     private $security;
     private $encoder;
 
-    public function __construct(EntityManagerInterface $em, Security $security, UserPasswordEncoderInterface $encoder)
+    public function __construct(EntityManagerInterface $em, ManagerRegistry $managerRegistry, Security $security, UserPasswordEncoderInterface $encoder)
     {
         $this->em = $em;
         $this->security = $security;
         $this->encoder = $encoder;
+        $this->managerRegistry = $managerRegistry;
     }
 
     /**
@@ -98,8 +100,9 @@ class AccountController extends AbstractController
         // );
     }
 
+
     /**
-     * Creation d'un compte
+     * Enregistrement du compte
      * 
      * @Route("/api/account/register", name="api_account_register", methods={"POST"})
      * 
@@ -109,44 +112,79 @@ class AccountController extends AbstractController
         try {
             $user = $this->security->getUser();
             $userRepository = $this->em->getRepository(User::class);
+            $marqueRepository = $this->em->getRepository(Marque::class);
+            $deviceRepository = $this->em->getRepository(Device::class);
             $content = json_decode($request->getContent(), true);
             $params_condition = isset($content["deviceKey"]) && isset($content["marque"]) && isset($content['nom']) && isset($content['prenom']) && isset($content['email']) && isset($content['password']);
             if ($params_condition) {
-                $user = $userRepository->findOneBy(array('email' => $content['deviceKey']));
-                if (!is_null($user)) {
-                    if (filter_var($content["email"], FILTER_VALIDATE_EMAIL)) {
-                        //Creation de la marque
-                        $marque = new Marque();
-                        $marque->libelle = $content["marque"];
-                        $this->em->persist($marque);
-                        $this->em->flush();
-                        $this->em->refresh($marque);
-                        // Update du User
-                        $user->setLastname($content['nom']);
-                        $user->setFirstname($content['prenom']);
-                        $user->setEmail($content['email']);
-                        $password = $this->encoder->encodePassword($user, $content['password']);
-                        $user->setPassword($password);
+                if (isset($content["marque"]))
+                {
+                    $marque = $marqueRepository->findOneBy(['libelle' => $content["marque"]["libelle"]]);
+                    if($marque != null)
+                    {
+                    $user = $userRepository->findOneBy(array('email' => $content['deviceKey']));
+                    if($user == null )
+                    {
+                        // Création du User de Demo avec UUID
+                        $user = new User();
+                        $user->setNom($content['deviceKey']);
+                        $user->setPrenom($content['deviceKey']);
+                        $user->setEmail($content['deviceKey']);
                         $user->setMarque($marque);
+                        $password = $this->encoder->encodePassword($user, 'ThisUserDoesntHaveAnyPassword');
+                        $user->setPassword($password);
                         $this->em->persist($user);
                         $this->em->flush();
-
-                        $response = new Response($serializer->serialize($user, 'json', ['groups' => 'user:get']), 201, ['Content-Type' => 'application/json+ld']);
-                    } else {
-                        $response = new Response("'Error : Email not well formed.'", 422, ['Content-Type' => 'application/json+ld']);
+                        $user = $userRepository->findOneBy(array('email' => $content['deviceKey']));
                     }
-                } else {
-                    $response = new Response("'Error : User or Device doesn't Exist / user unhautorize...'", 500, ['Content-Type' => 'application/json+ld']);
+                    $device = $deviceRepository->findOneBy(array('deviceKey' => $content['deviceKey']));
+                    if($device == null )
+                    {
+                        // Creation du Device
+                        $device = new Device();
+                        $device->setDeviceKey($content['deviceKey']);
+                        $device->setUser($user);
+                        $this->em->persist($device);
+                        $this->em->flush();
+                        $this->em->refresh($device->setUser($user));
+                        $device = $deviceRepository->findOneBy(array('deviceKey' => $content['deviceKey']));
+                        $user = $userRepository->findOneBy(array('email' => $content['deviceKey']));
+                        if (!is_null($user)) {
+                            if (filter_var($content["email"], FILTER_VALIDATE_EMAIL)) {
+                                
+                                // Update du User
+                                $user->setNom($content['nom']);
+                                $user->setPrenom($content['prenom']);
+                                $user->setEmail($content['email']);
+                                $password = $this->encoder->encodePassword($user, $content['password']);
+                                $user->setPassword($password);
+                                $user->setMarque($marque);
+                                $this->em->persist($user);
+                                $this->em->flush();
+                                $response = new Response($serializer->serialize($user, 'json'), 201, ['Content-Type' => 'application/json+ld']);
+                            } else {
+                                $response = new JsonResponse(['success' => false, 'message' => ' Email not well formed.'], 422);
+                            }
+                        } else {
+                            $response = new JsonResponse(['success' => false, 'message' => " User doesn't Exist / user unhautorize..."], 500);
+                        }
+                    }else{
+                        $response = new JsonResponse(['success' => false, 'message' => ' Device ever associate to user.'], 422);
+                    }  
+                    }else{
+                        $response = new JsonResponse(['success' => false, 'message' => " Marque doesn't Exist / user unhautorize..."], 500);
+                    }     
+                }else{
+                    $response = new JsonResponse(['success' => false, 'message' => ' Marque Attribue manquant'], 500);
                 }
             } else {
-                $response = new Response("'Error : Arguments are missing or not well formed.'", 422, ['Content-Type' => 'application/json+ld']);
+                $response = new JsonResponse(['success' => false, 'message' => ' Error : Arguments are missing or not well formed.'], 422);
             }
         } catch (UniqueConstraintViolationException $e) {
-            $response = new Response("'Error : This email is already in use.'", 409, ['Content-Type' => 'application/json+ld']);
+            $response = new Response("'message : This email is already in use.'", 409, ['Content-Type' => 'application/json+ld']);
         } catch (Exception $e) {
-            $response = new Response("'Error : An error occured'", 500, ['Content-Type' => 'application/json+ld']);
+            $response = new Response("'message : An error occured'", 500, ['Content-Type' => 'application/json+ld']);
         }
-
         return $response;
     }
 
@@ -197,7 +235,7 @@ class AccountController extends AbstractController
                     new Response("'Error : Invalid Token.'", 401, ['Content-Type' => 'application/json+ld']);
             } else {
                 return
-                    new Response($serializer->serialize($user, 'json', ['groups' => 'user:get']), 201, ['Content-Type' => 'application/json+ld']);
+                    new Response($serializer->serialize($user, 'json'), 200, ['Content-Type' => 'application/json+ld']);
             }
     }
 }

@@ -31,9 +31,15 @@ class Marque
      */
     private $users;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Client::class, mappedBy="marque")
+     */
+    private $clients;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->clients = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,6 +83,36 @@ class Marque
             // set the owning side to null (unless already changed)
             if ($user->getMarque() === $this) {
                 $user->setMarque(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Client[]
+     */
+    public function getClients(): Collection
+    {
+        return $this->clients;
+    }
+
+    public function addClient(Client $client): self
+    {
+        if (!$this->clients->contains($client)) {
+            $this->clients[] = $client;
+            $client->setMarque($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClient(Client $client): self
+    {
+        if ($this->clients->removeElement($client)) {
+            // set the owning side to null (unless already changed)
+            if ($client->getMarque() === $this) {
+                $client->setMarque(null);
             }
         }
 

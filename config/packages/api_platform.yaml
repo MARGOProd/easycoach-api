@@ -1,4 +1,5 @@
 api_platform:
+    show_webby: false
     title: 'EasyCoach Api Rest '   
     description: 'A Symfony API to manage Easy Coach app.'
     version: '1.0.0'
