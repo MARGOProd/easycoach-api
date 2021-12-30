@@ -36,10 +36,16 @@ class Marque
      */
     private $clients;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Seance::class, mappedBy="marque")
+     */
+    private $seances;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->clients = new ArrayCollection();
+        $this->seances = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -113,6 +119,36 @@ class Marque
             // set the owning side to null (unless already changed)
             if ($client->getMarque() === $this) {
                 $client->setMarque(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Seance[]
+     */
+    public function getSeances(): Collection
+    {
+        return $this->seances;
+    }
+
+    public function addSeance(Seance $seance): self
+    {
+        if (!$this->seances->contains($seance)) {
+            $this->seances[] = $seance;
+            $seance->setMarque($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeance(Seance $seance): self
+    {
+        if ($this->seances->removeElement($seance)) {
+            // set the owning side to null (unless already changed)
+            if ($seance->getMarque() === $this) {
+                $seance->setMarque(null);
             }
         }
 

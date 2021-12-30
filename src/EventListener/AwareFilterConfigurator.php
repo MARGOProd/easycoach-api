@@ -35,14 +35,14 @@ final class AwareFilterConfigurator
             if(!$this->authorizationChecker->isGranted('ROLE_ADMIN')){
                 //It's a user.
                 $filter = $this->em->getFilters()->enable('user_filter');
-                $filter->setParameter('id', $user->id);
+                $filter->setParameter('id', $user->getId());
                 $filter->setAnnotationReader($this->reader);
             }else{
                 //It's an ADMIN
-                if($user->reseller != null){
+                if($user->getMarque() != null){
                     //It's a reseller ADMIN
-                    $filter = $this->em->getFilters()->enable('reseller_filter');
-                    $filter->setParameter('id', $user->marque->id); //TODO A revoir pour fixer la table
+                    $filter = $this->em->getFilters()->enable('marque_filter');
+                    $filter->setParameter('id', $user->getMarque()->getId()); //TODO A revoir pour fixer la table
                     $filter->setAnnotationReader($this->reader);
                 }else{
                     //The Marque ADMIN do not have a specific filter. The response will handle in another file.

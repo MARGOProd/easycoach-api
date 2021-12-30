@@ -8,18 +8,21 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-
+use App\Annotation\UserAware;
+use App\Annotation\MarqueAware;
 /**
  * @ApiResource(
  *  normalizationContext={"groups"={"seances:get"}, "skip_null_values" = false},
  *  denormalizationContext={"groups"={"seance:post"}},
- * itemOperations={
+ *  itemOperations={
 *       "get"={"normalization_context"={"groups"="seance:get"}},
 *   }
  * )
+ * @MarqueAware(fieldName="marque_id")
+ * @UserAware(fieldName="user_id")
  * @ORM\Entity(repositoryClass=SeanceRepository::class)
  */
-class Seance
+class Seance implements OwnerForceInterface
 {
     /**
      * @ORM\Id
@@ -49,9 +52,24 @@ class Seance
 
     /**
      * @ORM\OneToMany(targetEntity=Serie::class, mappedBy="seance")
+     * @ORM\JoinColumn(name="marque_id", referencedColumnName="id", nullable=true)
      * @Groups({"client:get", "seance:get"})
      */
     private $series;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="seances")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
+     * @Groups({"seance:post", "seance:get"})
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Marque::class, inversedBy="seances")
+     * @ORM\JoinColumn(name="marque_id", referencedColumnName="id", nullable=true)
+     * @Groups({"seance:post", "seance:get"})
+     */
+    private $marque;
 
     public function __construct()
     {
@@ -128,4 +146,28 @@ class Seance
 
     //     return $this;
     // }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getMarque(): ?Marque
+    {
+        return $this->marque;
+    }
+
+    public function setMarque(?Marque $marque): self
+    {
+        $this->marque = $marque;
+
+        return $this;
+    }
 }

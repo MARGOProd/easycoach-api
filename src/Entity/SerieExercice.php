@@ -59,6 +59,11 @@ class SerieExercice
      */
     private $duree;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Materiel::class, inversedBy="serieExercices")
+     */
+    private $materiel;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -132,6 +137,18 @@ class SerieExercice
     public function setDuree(?int $duree): self
     {
         $this->duree = $duree;
+
+        return $this;
+    }
+
+    public function getMateriel(): ?Materiel
+    {
+        return $this->materiel;
+    }
+
+    public function setMateriel(?Materiel $materiel): self
+    {
+        $this->materiel = $materiel;
 
         return $this;
     }

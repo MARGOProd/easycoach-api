@@ -66,22 +66,28 @@ class ClientDataDataProvider implements ItemDataProviderInterface, RestrictedDat
             $filters = $context["filters"];
         }
 
-        
         $connectionParams = array(
             'url' => $this->mysqlConnection,
         );
         $conn = DriverManager::getConnection($connectionParams );
         if(!empty($filters))
         {
-            dump($currentUser);
-            $sql = 'SELECT user.nom as libelle, user.id as id, "user" as type FROM user WHERE nom = :usernom or prenom = :userprenom and user.id = :userid
-            UNION SELECT client.nom as libelle, client.id as id, "client" as type FROM client WHERE nom = :clientnom or prenom = :clientprenom and client.user_id = :userid';
+            $sql = 'SELECT serie.id as libelle, serie.id as id, "serie" as type 
+            FROM serie 
+            WHERE id IN(
+                SELECT seance.id
+                FROM seance
+                WHERE seance.client_id = :userid
+            )';
+            // -- UNION SELECT client.nom as libelle, client.id as id, "client" as type 
+            // -- FROM client 
+            // -- WHERE nom = :clientnom or prenom = :clientprenom and client.user_id = :userid';
             $stmt = $conn->prepare($sql);
-            $stmt->bindValue(':userid', $currentUser->getId());
-            $stmt->bindValue(':usernom', $filters['search']);
-            $stmt->bindValue(':userprenom', $filters['search']);
-            $stmt->bindValue('clientnom', $filters['search']);
-            $stmt->bindValue('clientprenom', $filters['search']);
+            $stmt->bindValue(':userid', $filters['client']);
+            // $stmt->bindValue(':usernom', $filters['search']);
+            // $stmt->bindValue(':userprenom', $filters['search']);
+            // $stmt->bindValue('clientnom', $filters['search']);
+            // $stmt->bindValue('clientprenom', $filters['search']);
             $resultSet = $stmt->executeQuery();
     
             $i=0;
@@ -100,3 +106,11 @@ class ClientDataDataProvider implements ItemDataProviderInterface, RestrictedDat
         
     }
 }
+
+
+// $sql = 'SELECT user.nom as libelle, user.id as id, "user" as type 
+//             FROM user 
+//             WHERE nom = :usernom or prenom = :userprenom and user.id = :userid
+//             UNION SELECT client.nom as libelle, client.id as id, "client" as type 
+//             FROM client 
+//             WHERE nom = :clientnom or prenom = :clientprenom and client.user_id = :userid';

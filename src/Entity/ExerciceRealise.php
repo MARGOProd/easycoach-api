@@ -63,6 +63,12 @@ class ExerciceRealise
      */
     private $exercice;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Materiel::class, inversedBy="exerciceRealises")
+     * @Groups({"exerciceRealises:get", "serie:get"})
+     */
+    private $materiel;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -136,6 +142,18 @@ class ExerciceRealise
     public function setExercice(?Exercice $exercice): self
     {
         $this->exercice = $exercice;
+
+        return $this;
+    }
+
+    public function getMateriel(): ?Materiel
+    {
+        return $this->materiel;
+    }
+
+    public function setMateriel(?Materiel $materiel): self
+    {
+        $this->materiel = $materiel;
 
         return $this;
     }

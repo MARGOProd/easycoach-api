@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use App\Annotation\UserAware;
+use App\Annotation\MarqueAware;
 
 
 /**
@@ -23,10 +25,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 *       "delete"
 *   }
  * )
+ * @MarqueAware(fieldName="marque_id")
+ * @UserAware(fieldName="user_id")
  * @ORM\Entity(repositoryClass=ClientRepository::class)
  * @ApiFilter(OrderFilter::class, properties={"id", "prenom" : "DESC", "nom"}, arguments={"orderParameterName"="order"})
  */
-class Client
+class Client implements OwnerForceInterface
 {
     /**
      * @ORM\Id

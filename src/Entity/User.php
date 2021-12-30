@@ -72,10 +72,16 @@ class User implements UserInterface
      */
     private $clients;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Seance::class, mappedBy="user")
+     */
+    private $seances;
+
     public function __construct()
     {
         $this->devices = new ArrayCollection();
         $this->clients = new ArrayCollection();
+        $this->seances = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -261,6 +267,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($client->getUser() === $this) {
                 $client->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Seance[]
+     */
+    public function getSeances(): Collection
+    {
+        return $this->seances;
+    }
+
+    public function addSeance(Seance $seance): self
+    {
+        if (!$this->seances->contains($seance)) {
+            $this->seances[] = $seance;
+            $seance->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeance(Seance $seance): self
+    {
+        if ($this->seances->removeElement($seance)) {
+            // set the owning side to null (unless already changed)
+            if ($seance->getUser() === $this) {
+                $seance->setUser(null);
             }
         }
 
