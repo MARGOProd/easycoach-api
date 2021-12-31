@@ -18,7 +18,7 @@ final class MarqueFilter extends SQLFilter
         }
         // The Doctrine filter is called for any query on any entity
         // Check if the current entity is "aware" (marked with an annotation)
-        $aware = $this->reader->getClassAnnotation($targetEntity->getReflectionClass(), ResellerAware::class);
+        $aware = $this->reader->getClassAnnotation($targetEntity->getReflectionClass(), MarqueAware::class);
         if (!$aware) {
             return '';
         }

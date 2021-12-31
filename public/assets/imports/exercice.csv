@@ -1,0 +1,392 @@
+libelle,groupe_musculaire_libelle,groupe_musculaire_id,is_direct
+Développé nuque,trapeze,1,1
+Relevé d'épaule,trapeze,1,1
+"Élévation latérale, bras tendus",trapeze,1,1
+Tirage de barre en pronation,trapeze,1,1
+"Tirage poulie, bras serrés",trapeze,1,1
+Haussement d'épaules à la barre,trapeze,1,1
+Tirage verticale,trapeze,1,1
+Haussement d'épaules en rotation,trapeze,1,1
+Haussement d'épaules,trapeze,1,1
+Tirage verticale avec barre,trapeze,1,1
+Fly inversé (Banc multifonction),trapeze,1,1
+"Développé nuque, assis (Banc multifonction)",trapeze,1,1
+Deltoïdes à la poulie basse (Banc multifonction),trapeze,1,1
+"Deltoïdes, buste penché (Banc multifonction)",trapeze,1,1
+Tirage deltoïde à un bras (Banc multifonction),trapeze,1,1
+"Tirage avant, à la poulie (Banc multifonction)",trapeze,1,1
+"Haussement d'épaules, à la poulie (Banc multifonction)",trapeze,1,1
+Développé droit assis en pronation,deltoides,2,1
+Développé avant,deltoides,2,1
+Développé assis alterné en pronation,deltoides,2,1
+Élévation latérale incliné,deltoides,2,1
+Élévation latérale large,deltoides,2,1
+Développé avant alterné,deltoides,2,1
+Développé avant assis,deltoides,2,1
+"Élévation latérale, bras tendus",deltoides,2,1
+Développé avant assis alterné,deltoides,2,1
+Relevé d'épaule,deltoides,2,1
+"Développé avant, prise étroite",deltoides,2,1
+Tirage verticale,deltoides,2,1
+Développé nuque,deltoides,2,1
+Développé droit en pronation,deltoides,2,1
+Élévation latérale allongé,deltoides,2,1
+Élévation latérale courte,deltoides,2,1
+Élévation avant alterné,deltoides,2,1
+Tirage avec haltère,deltoides,2,1
+Élévation frontale avec haltère,deltoides,2,1
+Élévation latérale à la poulie,deltoides,2,1
+Fly inversé (Banc multifonction),deltoides,2,1
+Tirage dorsaux à la poulie basse (Banc multifonction),deltoides,2,1
+Dorsaux à la poulie basse (Banc multifonction),deltoides,2,1
+"Développé nuque, assis (Banc multifonction)",deltoides,2,1
+Développé avant incliné (Banc multifonction),deltoides,2,1
+Deltoïdes à la poulie basse (Banc multifonction),deltoides,2,1
+"Deltoïde, buste penché (Banc multifonction)",deltoides,2,1
+Tirage dorsaux (Banc multifonction),deltoides,2,1
+Tirage deltoïde à un bras (Banc multifonction),deltoides,2,1
+"Tirage avant, à la poulie (Banc multifonction)",deltoides,2,1
+Tirage de barre en pronation,deltoides,2,1
+Développé couché classique,pectoraux,3,1
+Développé couché avec haltères,pectoraux,3,1
+"Développé couché, prise large",pectoraux,3,1
+"Développé couché haltères, prise marteau",pectoraux,3,1
+"Développé couché, prise serrée",pectoraux,3,1
+Développé décliné à la barre,pectoraux,3,1
+Développé décliné aux haltères,pectoraux,3,1
+"Développé décliné haltères, prise marteau",pectoraux,3,1
+Développé incliné classique,pectoraux,3,1
+"Développé incliné haltère, prise marteau",pectoraux,3,1
+Développé incliné avec haltères,pectoraux,3,1
+"Développé incliné, prise large",pectoraux,3,1
+"Développé incliné, prise serrée",pectoraux,3,1
+Écarté couché,pectoraux,3,1
+Écarté décliné,pectoraux,3,1
+Écarté incliné,pectoraux,3,1
+"Développé avant, prise étroite",pectoraux,3,1
+Pull-over,pectoraux,3,1
+Répulsion triceps,pectoraux,3,1
+Pull-over avec barre,pectoraux,3,1
+Développé droit à la machine,pectoraux,3,1
+Écarté à la poulie,pectoraux,3,1
+Écarté alterné à la poulie,pectoraux,3,1
+Écarté à la machine,pectoraux,3,1
+Répulsion à la chaise Romaine,pectoraux,3,1
+Développé avant (Banc multifonction),pectoraux,3,1
+"Pectoraux papillon, ou Pec fly",pectoraux,3,1
+Pull-over,dorsaux,4,1
+Pull-over avec barre,dorsaux,4,1
+Tirage avec haltère,dorsaux,4,1
+Tirage de barre en pronation,dorsaux,4,1
+Traction nuque à la barre-fixe,dorsaux,4,1
+Traction à la barre-fixe,dorsaux,4,1
+Tirage bras tendus,dorsaux,4,1
+"Tirage nuque, prise large",dorsaux,4,1
+"Tirage poulie, bras serrés",dorsaux,4,1
+"Tirage poitrine, prise large",dorsaux,4,1
+Tirage poitrine,dorsaux,4,1
+"Tirage poitrine, prise courte",dorsaux,4,1
+Fly inversé (Banc multifonction),dorsaux,4,1
+Tirage dorsaux à la poulie basse (Banc multifonction),dorsaux,4,1
+Dorsaux à la poulie basse (Banc multifonction),dorsaux,4,1
+"Développé nuque, assis (Banc multifonction)",dorsaux,4,1
+Développé dorsaux assis (Banc multifonction),dorsaux,4,1
+Développé avant (Banc multifonction),dorsaux,4,1
+"Deltoïde, buste penché (Banc multifonction)",dorsaux,4,1
+Tirage dorsaux (Banc multifonction),dorsaux,4,1
+Tirage deltoïde à un bras (Banc multifonction),dorsaux,4,1
+"Tirage avant, assis à la poulie (Banc multifonction)",dorsaux,4,1
+"Haussement d'épaules, à la poulie (Banc multifonction)",dorsaux,4,1
+"Tirage Pullover, à la poulie (Banc multifonction)",dorsaux,4,1
+"Flexion assis, prise marteau alternée",avant_bras_poignets,5,1
+Flexion des poignets,avant_bras_poignets,5,1
+Flexion des poignet en supination,avant_bras_poignets,5,1
+Flexion biceps Assis avec haltère,avant_bras_poignets,5,1
+"Flexion biceps assis, prise marteau",avant_bras_poignets,5,1
+Flexion biceps en pronation,avant_bras_poignets,5,1
+"Flexion debout, prise marteau alternée",avant_bras_poignets,5,1
+"Flexion debout, prise marteau",avant_bras_poignets,5,1
+Traction nuque à la barre-fixe,avant_bras_poignets,5,1
+Biceps à la poulie haute (Banc multifonction),avant_bras_poignets,5,1
+Flexion biceps assis,biceps,6,1
+Tirage avec haltère,biceps,6,1
+Flexion biceps Assis alterné,biceps,6,1
+Flexion biceps Assis avec haltère,biceps,6,1
+"Flexion biceps assis, prise marteau",biceps,6,1
+Flexion biceps en pronation,biceps,6,1
+Flexion biceps debout,biceps,6,1
+"Flexion debout, prise marteau alternée",biceps,6,1
+Flexion biceps debout alterné,biceps,6,1
+"Flexion assis, prise marteau alternée",biceps,6,1
+"Flexion debout, prise marteau",biceps,6,1
+"Tirage nuque, prise large",biceps,6,1
+Traction à la barre-fixe,biceps,6,1
+"Flexion biceps, bras écartés",biceps,6,1
+Traction nuque à la barre-fixe,biceps,6,1
+"Flexion biceps, bras serrés",biceps,6,1
+Flexion biceps à la machine,biceps,6,1
+"Flexion biceps, debout (Banc multifonction)",biceps,6,1
+Biceps à la poulie haute (Banc multifonction),biceps,6,1
+Tirage dorsaux (Banc multifonction),biceps,6,1
+Tirage biceps à la poulie (Banc multifonction),biceps,6,1
+Développé couché classique,triceps,7,1
+Développé couché avec haltères,triceps,7,1
+"Développé couché, prise large",triceps,7,1
+"Développé couché haltères, prise marteau",triceps,7,1
+"Développé couché, prise serrée",triceps,7,1
+Développé décliné à la barre,triceps,7,1
+Développé décliné aux haltères,triceps,7,1
+"Développé décliné haltères, prise marteau",triceps,7,1
+Développé incliné classique,triceps,7,1
+"Développé incliné haltère, prise marteau",triceps,7,1
+Développé incliné avec haltères,triceps,7,1
+"Développé incliné, prise large",triceps,7,1
+"Développé incliné, prise serrée",triceps,7,1
+Écarté couché,triceps,7,1
+Écarté décliné,triceps,7,1
+Écarté incliné,triceps,7,1
+Extension triceps à deux mains,triceps,7,1
+Développé nuque,triceps,7,1
+Répulsion triceps,triceps,7,1
+Extension alterné avec haltère,triceps,7,1
+Extension verticale avec haltère,triceps,7,1
+Pull-over,triceps,7,1
+Extension triceps allongé,triceps,7,1
+Pull-over avec barre,triceps,7,1
+Répulsion à la chaise Romaine,triceps,7,1
+"Extension à la poulie, en supination",triceps,7,1
+"Extension à la poulie, en pronation",triceps,7,1
+Développé droit à la machine,triceps,7,1
+"Extension à la poulie, bras levés",triceps,7,1
+Tirage bras tendus,triceps,7,1
+Développé avant (Banc multifonction),triceps,7,1
+Triceps à la poulie haute (Banc multifonction),triceps,7,1
+"Triceps KickBack, à la poulie (Banc multifonction)",triceps,7,1
+Tirage triceps en pronation (Banc multifonction),triceps,7,1
+Tirage triceps en supination (Banc multifonction),triceps,7,1
+"Tirage avant, assis à la poulie (Banc multifonction)",triceps,7,1
+"Tirage Pullover, à la poulie (Banc multifonction)",triceps,7,1
+Crunch,abdominaux,8,1
+"Rotation du buste, en équilibre",abdominaux,8,1
+"Flexion latérale inversée, avec haltère",abdominaux,8,1
+"Flexion latérale, avec haltère",abdominaux,8,1
+"Relevé de buste, bras tendus",abdominaux,8,1
+Relevé de buste,abdominaux,8,1
+Décollé de bassin,abdominaux,8,1
+Crunch oblique,abdominaux,8,1
+"Enroulé de buste, bras tendus",abdominaux,8,1
+Enroulé de buste,abdominaux,8,1
+Abdo Butt-ups,abdominaux,8,1
+Flexion latérale à la barre,abdominaux,8,1
+Flexion latérale avec haltères,abdominaux,8,1
+Flexion latérale inversée avec haltères,abdominaux,8,1
+Extension abdo basse,abdominaux,8,1
+Extension abdo haute,abdominaux,8,1
+Relevé de jambes assis,abdominaux,8,1
+Relevé de jambes,abdominaux,8,1
+"Relevé de buste, décliné",abdominaux,8,1
+"Relevé de buste, incliné",abdominaux,8,1
+"Enroulé de buste, incliné",abdominaux,8,1
+"Enroulé de buste, décliné",abdominaux,8,1
+"Abdo à la poulie, sur les genoux",abdominaux,8,1
+"Abdo à la poulie, assis",abdominaux,8,1
+"Abdo à la poulie, au sol",abdominaux,8,1
+"Abdo à la roue abdominale, sur cheville",abdominaux,8,1
+"Abdo à la roue abdominale, à genoux",abdominaux,8,1
+"Abdo long, à la chaise romaine",abdominaux,8,1
+"Abdo court, à la chaise romaine",abdominaux,8,1
+"Relevé de jambes suspendu, court",abdominaux,8,1
+"Relevé de jambes suspendu, long",abdominaux,8,1
+Relevé de jambes incliné,abdominaux,8,1
+"Relevé de jambe, bassin décollé",abdominaux,8,1
+"Relevé de jambes suspendu, oblique",abdominaux,8,1
+"Flexion buste, à la poulie (Banc multifonction)",abdominaux,8,1
+Rotation de buste latérale (Banc multifonction),abdominaux,8,1
+"Élévation, cuisses serrées",fessiers,9,1
+"Élévation, cuisses écartées",fessiers,9,1
+Squat classique,fessiers,9,1
+Relevé de bassin,fessiers,9,1
+"Squat, jambes écartées",fessiers,9,1
+Flexion buste avant,fessiers,9,1
+Fente avant,fessiers,9,1
+"Squat, jambes fermées",fessiers,9,1
+"Extension hanche, jambe droite",fessiers,9,1
+"Extension hanche, jambe fléchi",fessiers,9,1
+Presse à cuisses inclinée,fessiers,9,1
+Presse à cuisses,fessiers,9,1
+Fessiers alternés,fessiers,9,1
+Extension du buste,fessiers,9,1
+"Kick fessier, à la poulie (Banc multifonction)",fessiers,9,1
+Extension externe des adducteurs (Banc multifonction),fessiers,9,1
+"Squat latéral, à la poulie (Banc multifonction)",fessiers,9,1
+Extension des jambes,quadriceps,10,1
+Fente avant,quadriceps,10,1
+Presse à cuisses inclinée,quadriceps,10,1
+"Élévation, cuisses serrées",quadriceps,10,1
+"Squat, jambes fermées",quadriceps,10,1
+Squat classique,quadriceps,10,1
+Presse à cuisses,quadriceps,10,1
+Extension jambes (Banc multifonction),quadriceps,10,1
+Ishio-jambiers alternés,ishios,11,1
+Flexion buste avant,ishios,11,1
+"Squat, jambes ouvertes",ishios,11,1
+Fente avant,ishios,11,1
+"Élévation, cuisses ouvertes",ishios,11,1
+Relevé de bassin,ishios,11,1
+Squat classique,ishios,11,1
+"Élévation, cuisses écartées",ishios,11,1
+"Squat, jambes écartées",ishios,11,1
+Flexion ishio-jambiers,ishios,11,1
+Presse à cuisses inclinée,ishios,11,1
+Presse à cuisses,ishios,11,1
+Leg curl (Banc multifonction),ishios,11,1
+Kick ischio-jambiers (Banc multifonction),ishios,11,1
+"Squat, jambes écartées",adducteur,12,1
+"Élévation, cuisses écartées",adducteur,12,1
+"Élévation, cuisses ouvertes",adducteur,12,1
+"Squat, jambes ouvertes",adducteur,12,1
+Adducteur à la machine,adducteur,12,1
+Extension interne des adducteurs (Banc multifonction),adducteur,12,1
+"Squat avant, à la poulie (Banc multifonction)",adducteur,12,1
+Extension des mollets,mollets,13,1
+Extension des mollets assis,mollets,13,1
+Mollets à la poulie basse (Banc multifonction),mollets,13,1
+Élévation latérale large,trapeze,1,0
+Développé avant,trapeze,1,0
+Élévation latérale incliné,trapeze,1,0
+Développé avant alterné,trapeze,1,0
+Traction nuque à la barre-fixe,trapeze,1,0
+Développé avant assis alterné,trapeze,1,0
+"Développé avant, prise étroite",trapeze,1,0
+Développé assis alterné (pronation),trapeze,1,0
+Développé avant assis,trapeze,1,0
+Tirage avec haltère,trapeze,1,0
+Traction à la barre-fixe,trapeze,1,0
+Développé droit en pronation,trapeze,1,0
+Développé droit assis en pronation,trapeze,1,0
+"Tirage poitrine, prise large",trapeze,1,0
+"Tirage nuque, prise large",trapeze,1,0
+Tirage poitrine,trapeze,1,0
+Tirage dorsaux à la poulie basse (Banc multifonction),trapeze,1,0
+Dorsaux à la poulie basse (Banc multifonction),trapeze,1,0
+Développé dorsaux assis (Banc multifonction),trapeze,1,0
+Développé avant incliné (Banc multifonction),trapeze,1,0
+Tirage dorsaux (Banc multifonction),trapeze,1,0
+Développé couché classique,deltoides,2,0
+Développé couché avec haltères,deltoides,2,0
+"Développé couché, prise large",deltoides,2,0
+"Développé couché haltères, prise marteau",deltoides,2,0
+"Développé couché, prise serrée",deltoides,2,0
+Développé décliné à la barre,deltoides,2,0
+Développé décliné aux haltères,deltoides,2,0
+"Développé décliné haltères, prise marteau",deltoides,2,0
+Développé incliné classique,deltoides,2,0
+"Développé incliné haltère, prise marteau",deltoides,2,0
+Développé incliné avec haltères,deltoides,2,0
+"Développé incliné, prise large",deltoides,2,0
+"Développé incliné, prise serrée",deltoides,2,0
+Écarté couché,deltoides,2,0
+Écarté décliné,deltoides,2,0
+Écarté incliné,deltoides,2,0
+Répulsion triceps,deltoides,2,0
+Tirage verticale avec barre,deltoides,2,0
+Développé droit à la machine,deltoides,2,0
+Écarté à la poulie,deltoides,2,0
+Écarté alterné à la poulie,deltoides,2,0
+Écarté à la machine,deltoides,2,0
+Répulsion à la chaise Romaine,deltoides,2,0
+Traction à la barre-fixe,deltoides,2,0
+Tirage poitrine,deltoides,2,0
+"Tirage nuque, prise large",deltoides,2,0
+"Tirage poulie, bras serrés",deltoides,2,0
+Développé avant (Banc multifonction),deltoides,2,0
+"Pectoraux papillon, ou Pec fly (Banc multifonction)",deltoides,2,0
+Élévation avant alterné,pectoraux,3,0
+Développé avant,pectoraux,3,0
+Élévation frontale avec haltère,pectoraux,3,0
+"Tirage poitrine, prise large",pectoraux,3,0
+Développé avant assis alterné,pectoraux,3,0
+Développé avant alterné,pectoraux,3,0
+Développé avant assis,pectoraux,3,0
+Développé avant incliné (Banc multifonction),pectoraux,3,0
+Traction à la barre-fixe,pectoraux,3,0
+"Tirage poitrine, prise courte",pectoraux,3,0
+Tirage de barre en pronation,avant_bras_poignets,5,0
+Tirage verticale avec barre,avant_bras_poignets,5,0
+Traction à la barre-fixe,avant_bras_poignets,5,0
+Tirage poitrine,avant_bras_poignets,5,0
+"Tirage poitrine, prise large",avant_bras_poignets,5,0
+"Tirage poitrine, prise courte",avant_bras_poignets,5,0
+"Tirage poulie, bras serrés",avant_bras_poignets,5,0
+"Tirage avant, à la poulie (Banc multifonction)",avant_bras_poignets,5,0
+Tirage verticale avec barre,biceps,6,0
+Écarté à la poulie,biceps,6,0
+Tirage de barre en pronation,biceps,6,0
+Écarté alterné à la poulie,biceps,6,0
+Tirage poitrine,biceps,6,0
+"Tirage poitrine, prise courte",biceps,6,0
+"Tirage poitrine, prise large",biceps,6,0
+"Tirage poulie, bras serrés",biceps,6,0
+"Tirage avant, à la poulie (Banc multifonction)",biceps,6,0
+"Pectoraux papillon, ou Pec fly (Banc multifonction)",biceps,6,0
+Développé avant,triceps,7,0
+Développé avant assis alterné,triceps,7,0
+"Développé avant, prise étroite",triceps,7,0
+Développé avant alterné,triceps,7,0
+Développé avant assis,triceps,7,0
+Développé avant incliné (Banc multifonction),triceps,7,0
+Rotation du bassin,abdominaux,8,0
+Flexion buste latérale,abdominaux,8,0
+Tirage verticale avec barre,abdominaux,8,0
+Squat classique,abdominaux,8,0
+"Squat, jambes fermées",abdominaux,8,0
+"Squat, jambes écartées",abdominaux,8,0
+"Élévation, cuisses serrées",abdominaux,8,0
+"Squat, jambes ouvertes",abdominaux,8,0
+"Élévation, cuisses écartées",abdominaux,8,0
+"Élévation, cuisses ouvertes",abdominaux,8,0
+Presse à cuisses,abdominaux,8,0
+Presse à cuisses inclinée,abdominaux,8,0
+"Tirage avant, à la poulie (Banc multifonction)",abdominaux,8,0
+"Squat avant, à la poulie (Banc multifonction)",abdominaux,8,0
+"Abduction de la hanche, couché",fessiers,9,0
+"Élévation, cuisses ouvertes",fessiers,9,0
+"Squat, jambes ouvertes",fessiers,9,0
+Tirage verticale avec barre,fessiers,9,0
+Abduction de la hanche,fessiers,9,0
+Adducteur à la poulie,fessiers,9,0
+Adducteur à la machine,fessiers,9,0
+Flexion ishio-jambiers,fessiers,9,0
+"Tirage avant, à la poulie (Banc multifonction)",fessiers,9,0
+"Squat avant, à la poulie (Banc multifonction)",fessiers,9,0
+"Squat, jambes écartées",quadriceps,10,0
+"Élévation, cuisses ouvertes",quadriceps,10,0
+"Squat, jambes ouvertes",quadriceps,10,0
+"Élévation, cuisses écartées",quadriceps,10,0
+"Squat avant, à la poulie (Banc multifonction)",quadriceps,10,0
+"Extension hanche, jambe droite",ishios,11,0
+"Squat, jambes fermées",ishios,11,0
+"Élévation, cuisses serrées",ishios,11,0
+Fessiers alternés,ishios,11,0
+"Kick fessier, à la poulie (Banc multifonction)",ishios,11,0
+"Squat avant, à la poulie (Banc multifonction)",ishios,11,0
+"Abduction de la hanche, couché",adducteur,12,0
+"Squat, jambes fermées",adducteur,12,0
+"Élévation, cuisses serrées",adducteur,12,0
+Squat classique,adducteur,12,0
+Abduction de la hanche,adducteur,12,0
+Adducteur à la poulie,adducteur,12,0
+Presse à cuisses,adducteur,12,0
+Presse à cuisses inclinée,adducteur,12,0
+Extension externe des adducteurs (Banc multifonction),adducteur,12,0
+"Squat latéral, à la poulie (Banc multifonction)",adducteur,12,0
+"Élévation, cuisses serrées",mollets,13,0
+"Élévation, cuisses écartées",mollets,13,0
+Squat classique,mollets,13,0
+"Squat, jambes écartées",mollets,13,0
+"Élévation, cuisses ouvertes",mollets,13,0
+"Squat, jambes fermées",mollets,13,0
+Presse à cuisses inclinée,mollets,13,0
+Presse à cuisses,mollets,13,0
+Leg curl (Banc multifonction),mollets,13,0
+Kick ischio-jambiers (Banc multifonction),mollets,13,0

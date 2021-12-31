@@ -40,7 +40,7 @@ final class AwareFilterConfigurator
             }else{
                 //It's an ADMIN
                 if($user->getMarque() != null){
-                    //It's a reseller ADMIN
+                    //It's a Marque ADMIN
                     $filter = $this->em->getFilters()->enable('marque_filter');
                     $filter->setParameter('id', $user->getMarque()->getId()); //TODO A revoir pour fixer la table
                     $filter->setAnnotationReader($this->reader);

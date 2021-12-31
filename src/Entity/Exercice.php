@@ -142,12 +142,11 @@ class Exercice
     }
 
     /**
-     * @Groups({"seance:get", "serie:get","exerciceRealises:get", "exercice:get"})
+     * @Groups({"seance:get", "serie:get", "exerciceRealises:get", "exercice:get"})
      */
     public function getMuscles()
     {
         $muscles = array();
-
         foreach($this->exerciceMuscles as $muscle)
         {
             // !in_array($muscle->getMuscle(),$muscles,true );
