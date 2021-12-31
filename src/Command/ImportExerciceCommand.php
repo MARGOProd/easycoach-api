@@ -79,9 +79,9 @@ class ImportExerciceCommand extends Command
                 foreach ($records as $key => $value) {
                     $exercice = $exerciceRepository->findOneBy(['libelle' => $value["libelle"]]);
                     $groupeMuscle = $groupeMuscleRepository->find($value['groupe_musculaire_id']);
-                    $muscles = $groupeMuscle->getMuscles();
-                    if(!empty($muscles))
+                    if(!empty($groupeMuscle))
                     {
+                        $muscles = $groupeMuscle->getMuscles();
                         if(is_null($exercice))
                         {
                             // l'exercice n'héxiste pas. Je le créer et créer la liaison exercice muscle.
