@@ -15,8 +15,10 @@ use App\Annotation\MarqueAware;
  *  normalizationContext={"groups"={"seances:get"}, "skip_null_values" = false},
  *  denormalizationContext={"groups"={"seance:post"}},
  *  itemOperations={
-*       "get"={"normalization_context"={"groups"="seance:get"}},
-*   }
+ *       "get"={"normalization_context"={"groups"="seance:get"}},
+ *       "delete",
+ *        "put",
+ *   }
  * )
  * @MarqueAware(fieldName="marque_id")
  * @UserAware(fieldName="user_id")
@@ -52,7 +54,6 @@ class Seance implements OwnerForceInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Serie::class, mappedBy="seance")
-     * @ORM\JoinColumn(name="marque_id", referencedColumnName="id", nullable=true)
      * @Groups({"client:get", "seance:get"})
      */
     private $series;
@@ -60,7 +61,7 @@ class Seance implements OwnerForceInterface
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="seances")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
-     * @Groups({"seance:post", "seance:get"})
+     * @Groups({"seance:post", "seance:get", "seances:get"})
      */
     private $user;
 
@@ -71,9 +72,22 @@ class Seance implements OwnerForceInterface
      */
     private $marque;
 
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"seance:post", "seance:get", "seances:get", "client:get", "serie:get"})
+     */
+    private $type;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="seance")
+     * @Groups({"seance:get", "seances:get"})
+     */
+    private $commentaires;
+
     public function __construct()
     {
         $this->series = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -170,4 +184,48 @@ class Seance implements OwnerForceInterface
 
         return $this;
     }
+
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+
+    public function setType(int $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commentaire[]
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setSeance($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getSeance() === $this) {
+                $commentaire->setSeance(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

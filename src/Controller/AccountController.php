@@ -86,11 +86,11 @@ class AccountController extends AbstractController
             $this->em->flush();
             // Creation du Device
             $device = new Device();
-            $device->deviceKey = $content['deviceKey'];
-            $device->user = $user;
+            $device->setDeviceKey($content['deviceKey']);
+            $device->setUser($user);
             $this->em->persist($device);
             $this->em->flush();
-            $this->em->refresh($device->user);
+            $this->em->refresh($device->getUser());
             $response = new Response($serializer->serialize($user, 'json', ['groups' => 'user:get']), 200, ['Content-Type' => 'application/json+ld']);
         } else {
             $response = new Response("'Error : User or Device Exist / user unhautorize...'", 500, ['Content-Type' => 'application/json+ld']);
@@ -202,12 +202,12 @@ class AccountController extends AbstractController
         $userForDevice = $userRepository->findOneBy(['email' => $content['email']]);
         if ($this->encoder->isPasswordValid($userForDevice, $content['password'])) {
             // TODO LICENCE
-            if (count($user->devices) < 2) {
+            if (count($user->getDevices()) < 1000) {
                 if ($device == null) {
                     $device = new Device();
-                    $device->deviceKey = $content['deviceKey'];
+                    $device->setDeviceKey($content['deviceKey']);
                 }
-                $device->user = $userForDevice;
+                $device->setUser($userForDevice);
                 $this->em->persist($device);
                 $this->em->flush();
                 $response = ['success' => true, 'message' => 'Device Registered for User ' . $content['email'], 'statusCode' => 201];

@@ -15,6 +15,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource(
  *  normalizationContext={"groups"={"exercice:get"}, "skip_null_values" = false},
+ *  collectionOperations={
+*       "get"={
+*           "normalization_context"={"groups"="exercices:get"},
+*       },
+*   }
  * )
  * @ORM\Entity(repositoryClass=ExerciceRepository::class)
  * @ApiFilter(SearchFilter::class, properties={"libelle"="partial"})
@@ -32,7 +37,7 @@ class Exercice
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"seance:get", "exerciceRealises:get", "serie:get", "exercice:get"})
+     * @Groups({"seance:get", "exerciceRealises:get", "serie:get", "exercice:get", "exercices:get"})
      */
     private $libelle;
 
@@ -133,23 +138,22 @@ class Exercice
      */
     public function getMateriels()
     {
-        $materiels = [];
+        $materiels =  array();
         foreach($this->exerciceMateriels as $materiel)
         {
-            $materiels = $materiel->getMateriel();
+            $materiels[] = $materiel->getMateriel();
         }
         return $materiels;
     }
 
     /**
-     * @Groups({"seance:get", "serie:get", "exerciceRealises:get", "exercice:get"})
+     * @Groups({"seance:get", "serie:get", "exerciceRealises:get", "exercice:get", "exercices:get"})
      */
     public function getMuscles()
     {
         $muscles = array();
         foreach($this->exerciceMuscles as $muscle)
         {
-            // !in_array($muscle->getMuscle(),$muscles,true );
             $muscles[] = $muscle->getMuscle();
         }
         return $muscles;

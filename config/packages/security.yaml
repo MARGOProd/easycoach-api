@@ -1,4 +1,5 @@
 security:
+    # enable_authenticator_manager: true
     encoders:
         App\Entity\User:
             algorithm: auto
@@ -37,7 +38,7 @@ security:
                 authenticators:
                     - App\Security\DeviceAuthenticator
                     - App\Security\UserAuthenticator
-                    # - lexik_jwt_authentication.jwt_token_authenticator
+                    - lexik_jwt_authentication.jwt_token_authenticator
         main:
             anonymous: true
             lazy: true

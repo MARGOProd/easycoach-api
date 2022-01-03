@@ -80,9 +80,15 @@ class Client implements OwnerForceInterface
      */
     private $marque;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="client")
+     */
+    private $commentaires;
+
     public function __construct()
     {
         $this->seance = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,6 +194,36 @@ class Client implements OwnerForceInterface
     public function setMarque(?Marque $marque): self
     {
         $this->marque = $marque;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commentaire[]
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getClient() === $this) {
+                $commentaire->setClient(null);
+            }
+        }
 
         return $this;
     }

@@ -12,8 +12,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource(
  * * itemOperations={
-*       "get"={"normalization_context"={"groups"="serie:get"}},
-*   }
+ *       "get"={"normalization_context"={"groups"="serie:get"}},
+ *       "delete",
+ *       "put"
+ *   }
  * )
  * @ORM\Entity(repositoryClass=SerieRepository::class)
  */
@@ -58,10 +60,16 @@ class Serie
      */
     private $exerciceRealises;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="serie")
+     */
+    private $commentaires;
+
     public function __construct()
     {
         $this->serieExercices = new ArrayCollection();
         $this->exerciceRealises = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -159,6 +167,36 @@ class Serie
             // set the owning side to null (unless already changed)
             if ($exerciceRealise->getSerie() === $this) {
                 $exerciceRealise->setSerie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commentaire[]
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setSerie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getSerie() === $this) {
+                $commentaire->setSerie(null);
             }
         }
 

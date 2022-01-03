@@ -17,13 +17,13 @@ class GroupeMusculaire
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get"})
+     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get"})
+     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get"})
      */
     private $libelle;
 

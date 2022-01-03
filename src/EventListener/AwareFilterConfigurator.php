@@ -30,7 +30,6 @@ final class AwareFilterConfigurator
             //throw new \RuntimeException('There is no authenticated user.');
             return;
         }
-
         if (!$this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
             if(!$this->authorizationChecker->isGranted('ROLE_ADMIN')){
                 //It's a user.
