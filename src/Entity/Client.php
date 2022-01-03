@@ -82,6 +82,7 @@ class Client implements OwnerForceInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="client")
+     * @Groups({"client:get"})
      */
     private $commentaires;
 

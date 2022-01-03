@@ -21,7 +21,7 @@ class Commentaire implements OwnerForceInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get", "serie:get"})
+     * @Groups({"seance:get", "serie:get", "client:get"})
      */
     private $id;
 
@@ -34,23 +34,25 @@ class Commentaire implements OwnerForceInterface
 
     /**
      * @ORM\ManyToOne(targetEntity=Seance::class, inversedBy="commentaires")
+     * @Groups({"serie:get", "client:get"})
      */
     private $seance;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"seance:get", "serie:get"})
+     * @Groups({"seance:get", "serie:get", "client:get"})
      */
     private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity=Serie::class, inversedBy="commentaires")
+     * @Groups({"seance:get", "client:get"})
      */
     private $serie;
 
     /**
      * @ORM\ManyToOne(targetEntity=ExerciceRealise::class, inversedBy="commentaires")
-     * @Groups({"seance:get", "serie:get"})
+     * @Groups({"seance:get", "serie:get", "client:get"})
      */
     private $exerciceRealise;
 
