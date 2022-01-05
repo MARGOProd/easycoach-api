@@ -285,4 +285,45 @@ class Seance implements OwnerForceInterface
         return $exerciceRepetitions;
     }
 
+    /**
+     * @Groups({"seance:get", "seances:get"})
+     */
+    public function getPoidsTotal()
+    {
+        $poids = 0;
+        if(!empty($this->getExerciceRealise()))
+        {
+            $exerciceRealises = $this->getExerciceRealise();
+            foreach($exerciceRealises as $exerciceRealise)
+            {
+                if($exerciceRealise->getPoids() != 0 && $exerciceRealise->getPoids() != null)
+                {
+                    $poids += $exerciceRealise->getPoids() * $exerciceRealise->getRepetition();
+                }
+            }
+        }
+        return $poids;
+    }
+
+    public function getExerciceRealise()
+    {
+        $poids = 0;
+        $series = $this->getSeries();
+        $exerciceRealises =array();
+        if(!$series->isEmpty())
+        {
+            foreach($series as $serie)
+            {
+                if(!$serie->getExerciceRealises()->isEmpty())
+                {
+                    foreach($serie->getExerciceRealises() as $exercicesRealise )
+                    {
+                        array_push($exerciceRealises, $exercicesRealise);
+                    }
+                }
+            }
+        }
+        return $exerciceRealises;
+    }
+
 }
