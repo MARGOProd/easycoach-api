@@ -64,6 +64,7 @@ class Commentaire implements OwnerForceInterface
 
     /**
      * @ORM\OneToMany(targetEntity=CommentaireMuscle::class, mappedBy="commentaire")
+     * @Groups({"seance:get", "serie:get", "client:get"})
      */
     private $commentaireMuscles;
 

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\CommentaireMuscleRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,6 +17,7 @@ class CommentaireMuscle
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"client:get"})
      */
     private $id;
 
@@ -28,6 +30,7 @@ class CommentaireMuscle
     /**
      * @ORM\ManyToOne(targetEntity=Muscle::class, inversedBy="commentaireMuscles")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"client:get"})
      */
     private $muscle;
 

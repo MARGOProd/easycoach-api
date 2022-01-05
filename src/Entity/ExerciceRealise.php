@@ -76,6 +76,16 @@ class ExerciceRealise
      */
     private $commentaires;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $duree;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $calorie;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
@@ -196,6 +206,42 @@ class ExerciceRealise
                 $commentaire->setExerciceRealise(null);
             }
         }
+        return $this;
+    }
+
+    public function percentRealisation()
+    {
+        $ExerciceRealiseCritere = ['rep' => null, 'poids' => null, 'duree' => null, 'cal' => null];
+        $ExerciceRealiseCritere['rep'] = $this->getRepetition();
+        $ExerciceRealiseCritere['poids'] = $this->getPoids();
+        // $ExerciceRealiseCritere['duree'] = $this->getDuree();
+        // $ExerciceRealiseCritere['cal'] = $this->getCalorie();
+        if(!$this->getExercice()->is_null)
+        {
+           $exercicePrevu = $this->getExercice();
+        }
+    }
+
+    public function getDuree(): ?int
+    {
+        return $this->duree;
+    }
+
+    public function setDuree(?int $duree): self
+    {
+        $this->duree = $duree;
+
+        return $this;
+    }
+
+    public function getCalorie(): ?int
+    {
+        return $this->calorie;
+    }
+
+    public function setCalorie(?int $calorie): self
+    {
+        $this->calorie = $calorie;
 
         return $this;
     }
