@@ -227,5 +227,62 @@ class Seance implements OwnerForceInterface
         return $this;
     }
 
+    /**
+     * @Groups({"seance:get", "seances:get"})
+     */
+    public function getRepetitionExercice()
+    {
+        $series = $this->getSeries();
+        $exerciceRepetitions = array();
+        if(!$series->isEmpty())
+        {
+            foreach($series as $serie)
+            {
+                if(!$serie->getExerciceRealises()->isEmpty())
+                {
+                    $exercicesRealises = $serie->getExerciceRealises();
+                    foreach($exercicesRealises as $exercicesRealise )
+                    {
+
+                        if($exercicesRealise->getRepetition() != null)
+                        {
+                            if(isset($exerciceRepetitions[$exercicesRealise->getExercice()->getLibelle()]))
+                            {
+                                $exerciceRepetitions[$exercicesRealise->getExercice()->getLibelle()]['fait'] += $exercicesRealise->getRepetition();
+                            }else{
+                                $exerciceRepetitions += [$exercicesRealise->getExercice()->getLibelle() => ['fait' => $exercicesRealise->getRepetition()]];
+                            }
+                        }
+                        if($exercicesRealise->getSerieExercice() != null)
+                        {
+                            $serieExercice = $exercicesRealise->getSerieExercice();
+                            if(isset($exerciceRepetitions[$serieExercice->getExercice()->getLibelle()]))
+                            {
+                                $exerciceRepetitions[$serieExercice->getExercice()->getLibelle()]+= ['prevu' => $serieExercice->getRepetition()* $serie->getFrequence()->getSets()];
+                            }else{
+                                $exerciceRepetitions += [$serieExercice->getExercice()->getLibelle() => ['prevu' => $serieExercice->getRepetition() * $serie->getFrequence()->getSets()]];
+                            }
+                        } 
+                    }
+                }
+                if(!$serie->getSerieExercices()->isEmpty())
+                {
+                    $exerciceSeriePrevu = $serie->getSerieExercices();
+                    if(!empty($exerciceRepetitions))
+                    {
+                        foreach($exerciceSeriePrevu as $exerciceSeriePrevu)
+                        {
+                            if(!isset($exerciceRepetitions[$exerciceSeriePrevu->getExercice()->getLibelle()]))
+                            {
+                                $exerciceRepetitions += [$exerciceSeriePrevu->getExercice()->getLibelle() => ['prevu' => $serieExercice->getRepetition()]];
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        return $exerciceRepetitions;
+    }
 
 }
