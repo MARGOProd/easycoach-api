@@ -274,7 +274,7 @@ class Seance implements OwnerForceInterface
                         {
                             if(!isset($exerciceRepetitions[$exerciceSeriePrevu->getExercice()->getLibelle()]))
                             {
-                                $exerciceRepetitions += [$exerciceSeriePrevu->getExercice()->getLibelle() => ['prevu' => $serieExercice->getRepetition()]];
+                                $exerciceRepetitions += [$exerciceSeriePrevu->getExercice()->getLibelle() => ['fait' => 0 , 'prevu' => $serieExercice->getRepetition()]];
                             }
                         }
                     }
