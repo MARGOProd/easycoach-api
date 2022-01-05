@@ -18,7 +18,7 @@ class SerieExercice
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get", "serie:get"})
+     * @Groups({"seance:get", "serie:get","exerciceRealises:get"})
      */
     private $id;
 
@@ -31,31 +31,31 @@ class SerieExercice
     /**
      * @ORM\ManyToOne(targetEntity=Exercice::class)
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"seance:get", "serie:get"})
+     * @Groups({"seance:get", "serie:get", "exerciceRealises:get"})
      */
     private $exercice;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get", "serie:get"})
+     * @Groups({"seance:get", "serie:get", "exerciceRealises:get"})
      */
     private $repetition;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"seance:get", "serie:get"})
+     * @Groups({"seance:get", "serie:get", "exerciceRealises:get"})
      */
     private $poids;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"seance:get", "serie:get"})
+     * @Groups({"seance:get", "serie:get", "exerciceRealises:get"})
      */
     private $calorie;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"seance:get", "serie:get"})
+     * @Groups({"seance:get", "serie:get", "exerciceRealises:get"})
      */
     private $duree;
 

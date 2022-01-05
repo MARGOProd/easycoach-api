@@ -46,6 +46,18 @@ class ExerciceRealise
      */
     private $poids;
 
+        /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"exerciceRealises:get", "serie:get"})
+     */
+    private $duree;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"exerciceRealises:get", "serie:get"})
+     */
+    private $calorie;
+
     /**
      * @ORM\ManyToOne(targetEntity=Serie::class, inversedBy="exerciceRealises")
      * @ORM\JoinColumn(nullable=false)
@@ -54,7 +66,7 @@ class ExerciceRealise
 
     /**
      * @ORM\ManyToOne(targetEntity=SerieExercice::class)
-     * @Groups({"serie:get"})
+     * @Groups({"serie:get", "exerciceRealises:get"})
      */
     private $serieExercice;
 
@@ -76,15 +88,7 @@ class ExerciceRealise
      */
     private $commentaires;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $duree;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $calorie;
 
     public function __construct()
     {
@@ -209,19 +213,6 @@ class ExerciceRealise
         return $this;
     }
 
-    public function percentRealisation()
-    {
-        $ExerciceRealiseCritere = ['rep' => null, 'poids' => null, 'duree' => null, 'cal' => null];
-        $ExerciceRealiseCritere['rep'] = $this->getRepetition();
-        $ExerciceRealiseCritere['poids'] = $this->getPoids();
-        // $ExerciceRealiseCritere['duree'] = $this->getDuree();
-        // $ExerciceRealiseCritere['cal'] = $this->getCalorie();
-        if(!$this->getExercice()->is_null)
-        {
-           $exercicePrevu = $this->getExercice();
-        }
-    }
-
     public function getDuree(): ?int
     {
         return $this->duree;
@@ -246,5 +237,71 @@ class ExerciceRealise
         return $this;
     }
 
+    /**
+     * @Groups({"exerciceRealises:get", "serie:get"})
+     */
+    public function getTauxRealisation()
+    {
+        $tauxRealisation = null;
+        $ExerciceRealiseCritere = ['rep' => null, 'poids' => null, 'duree' => null, 'cal' => null];
+        $ExerciceRealiseCritere['rep'] = $this->getRepetition();
+        $ExerciceRealiseCritere['poids'] = $this->getPoids();
+        $ExerciceRealiseCritere['duree'] = $this->getDuree();
+        $ExerciceRealiseCritere['cal'] = $this->getCalorie();
+        if($this->getSerieExercice() != null)
+        {
+            $exercicePrevu = $this->getSerieExercice();
+            $ExercicePrevuCritere = ['rep' => null, 'poids' => null, 'duree' => null, 'cal' => null];
+            $ExercicePrevuCritere['rep'] = $exercicePrevu->getRepetition();
+            $ExercicePrevuCritere['poids'] = $exercicePrevu->getPoids();
+            $ExercicePrevuCritere['duree'] = $exercicePrevu->getDuree();
+            $ExercicePrevuCritere['cal'] = $exercicePrevu->getCalorie();
+
+           if($ExerciceRealiseCritere['rep'] != null)
+           {
+            //    rep * duree
+               if($ExerciceRealiseCritere['duree'] != null && $ExerciceRealiseCritere['poids'] == null && $ExerciceRealiseCritere['cal'] == null)
+               {
+                    if($ExercicePrevuCritere['rep'] != null &&  $ExercicePrevuCritere['duree'] != null && $ExercicePrevuCritere['poids'] == null && $ExercicePrevuCritere['cal'] == null)
+                    {
+                        $PrevuTotal = $ExercicePrevuCritere['rep'] * $ExercicePrevuCritere['duree'];
+                        $RealiseeTotal = $ExerciceRealiseCritere['rep'] * $ExerciceRealiseCritere['duree'];
+                        $tauxRealisation = ($RealiseeTotal * 100 ) /  $PrevuTotal;
+                    }
+               }
+            //    rep * poids
+               else if($ExerciceRealiseCritere['poids'] != null && $ExerciceRealiseCritere['duree'] == null && $ExerciceRealiseCritere['cal'] == null)
+               {
+                    if($ExercicePrevuCritere['rep'] != null &&  $ExercicePrevuCritere['poids'] != null && $ExercicePrevuCritere['duree'] == null && $ExercicePrevuCritere['cal'] == null)
+                    {
+                        $PrevuTotal = $ExercicePrevuCritere['rep'] * $ExercicePrevuCritere['poids'];
+                        $RealiseeTotal = $ExerciceRealiseCritere['rep'] * $ExerciceRealiseCritere['poids'];
+                        $tauxRealisation = ($RealiseeTotal * 100 ) /  $PrevuTotal;
+                    }
+               }
+            //    rep * cal
+               else if($ExerciceRealiseCritere['cal'] != null && $ExerciceRealiseCritere['duree'] == null && $ExerciceRealiseCritere['poids'] == null)
+               {
+                    if($ExercicePrevuCritere['rep'] != null &&  $ExercicePrevuCritere['cal'] != null && $ExercicePrevuCritere['duree'] == null && $ExercicePrevuCritere['poids'] == null)
+                    {
+                        $PrevuTotal = $ExercicePrevuCritere['rep'] * $ExercicePrevuCritere['cal'];
+                        $RealiseeTotal = $ExerciceRealiseCritere['rep'] * $ExerciceRealiseCritere['cal'];
+                        $tauxRealisation = ($RealiseeTotal * 100 ) /  $PrevuTotal;
+                    }
+               }
+            //    rep
+               else{
+                    if($ExercicePrevuCritere['rep'] != null &&  $ExercicePrevuCritere['cal'] == null && $ExercicePrevuCritere['duree'] == null && $ExercicePrevuCritere['poids'] == null)
+                    {
+                        $tauxRealisation = ($ExerciceRealiseCritere['rep'] * 100 ) /  $ExercicePrevuCritere['rep'];
+                    }
+               }
+
+           }
+
+        }
+
+        return $tauxRealisation;
+    }
 
 }
