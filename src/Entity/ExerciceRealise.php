@@ -11,6 +11,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+
 /**
  * @ApiResource(
  *  normalizationContext={"groups"={"exerciceRealises:get"}, "skip_null_values" = false},

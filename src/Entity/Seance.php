@@ -17,7 +17,7 @@ use App\Annotation\MarqueAware;
  *  itemOperations={
  *       "get"={"normalization_context"={"groups"="seance:get"}},
  *       "delete",
- *        "put",
+ *       "put",
  *   }
  * )
  * @MarqueAware(fieldName="marque_id")

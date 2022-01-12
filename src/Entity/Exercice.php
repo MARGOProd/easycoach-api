@@ -15,6 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource(
  *  normalizationContext={"groups"={"exercice:get"}, "skip_null_values" = false},
+ *  denormalizationContext={"groups"={"exercice:post"}},
  *  collectionOperations={
 *       "get"={
 *           "normalization_context"={"groups"="exercices:get"},
@@ -31,18 +32,19 @@ class Exercice
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get", "exerciceRealises:get", "serie:get", "exercice:get"})
+     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "exercice:get", "exercices:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"seance:get", "exerciceRealises:get", "serie:get", "exercice:get", "exercices:get"})
+     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "exercice:get", "exercices:get"})
      */
     private $libelle;
 
     /**
      * @ORM\OneToMany(targetEntity=ExerciceMuscle::class, mappedBy="exercice")
+     * @Groups({"exercice:get"})
      */
     private $exerciceMuscles;
 

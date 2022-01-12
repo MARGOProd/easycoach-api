@@ -5,10 +5,19 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ExerciceMuscleRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 /**
  * @ApiResource()
- * @ORM\Entity(repositoryClass=ExerciceMuscleRepository::class)
+ * @ORM\Entity(repositoryClass=ExerciceMuscleRepository::class) 
+ * @ApiFilter(SearchFilter::class, properties={"exercice"="exact", "muscle"="exact", "isDirect"="exact"})
+ * @UniqueEntity(
+ *     fields={"exercice" , "muscle", "isDirect"},
+ *     errorPath="ExerciceMuscle",
+ *     message="This exerciceMuscle already exists."
+ * )
  */
 class ExerciceMuscle
 {
@@ -16,6 +25,7 @@ class ExerciceMuscle
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"exercice:get"})
      */
     private $id;
 
@@ -28,11 +38,13 @@ class ExerciceMuscle
     /**
      * @ORM\ManyToOne(targetEntity=Muscle::class, inversedBy="exerciceMuscles")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"exercice:get"})
      */
     private $muscle;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"exercice:get"})
      */
     private $isDirect;
 
