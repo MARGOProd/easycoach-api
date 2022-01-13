@@ -72,11 +72,13 @@ class Client implements OwnerForceInterface
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="clients")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Marque::class, inversedBy="clients")
+     * @ORM\JoinColumn(name="marque_id", referencedColumnName="id", nullable=true)
      */
     private $marque;
 

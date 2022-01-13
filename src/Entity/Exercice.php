@@ -11,7 +11,8 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
-
+use App\Annotation\UserAware;
+use App\Annotation\MarqueAware;
 /**
  * @ApiResource(
  *  normalizationContext={"groups"={"exercice:get"}, "skip_null_values" = false},
@@ -22,6 +23,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 *       },
 *   }
  * )
+ * @MarqueAware(fieldName="marque_id")
+ * @UserAware(fieldName="user_id")
  * @ORM\Entity(repositoryClass=ExerciceRepository::class)
  * @ApiFilter(SearchFilter::class, properties={"libelle"="partial"})
  * @ApiFilter(OrderFilter::class, properties={"id", "libelle"}, arguments={"orderParameterName"="order"})
@@ -52,6 +55,30 @@ class Exercice
      * @ORM\OneToMany(targetEntity=ExerciceMateriel::class, mappedBy="exercice")
      */
     private $exerciceMateriels;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "exercice:get", "exercices:get"})
+     */
+    private $descriptif;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Marque::class, inversedBy="exercices")
+     * @ORM\JoinColumn(name="marque_id", referencedColumnName="id", nullable=true)
+     */
+    private $marque;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="exercices")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
+     */
+    private $user;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isPublic;
 
     public function __construct()
     {
@@ -159,5 +186,54 @@ class Exercice
             $muscles[] = $muscle->getMuscle();
         }
         return $muscles;
+    }
+
+    public function getDescriptif(): ?string
+    {
+        return $this->descriptif;
+    }
+
+    public function setDescriptif(?string $descriptif): self
+    {
+        $this->descriptif = $descriptif;
+
+        return $this;
+    }
+
+
+    public function getMarque(): ?marque
+    {
+        return $this->marque;
+    }
+
+    public function setMarque(?marque $marque): self
+    {
+        $this->marque = $marque;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getIsPublic(): ?bool
+    {
+        return $this->isPublic;
+    }
+
+    public function setIsPublic(?bool $isPublic): self
+    {
+        $this->isPublic = $isPublic;
+
+        return $this;
     }
 }

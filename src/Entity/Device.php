@@ -4,11 +4,14 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\DeviceRepository;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass=DeviceRepository::class)
+    * @ApiFilter(SearchFilter::class, properties={"deviceKey"="exact"})     
  */
 class Device
 {

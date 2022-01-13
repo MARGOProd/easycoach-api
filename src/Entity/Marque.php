@@ -41,11 +41,17 @@ class Marque
      */
     private $seances;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Exercice::class, mappedBy="marque")
+     */
+    private $exercices;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->clients = new ArrayCollection();
         $this->seances = new ArrayCollection();
+        $this->exercices = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -149,6 +155,36 @@ class Marque
             // set the owning side to null (unless already changed)
             if ($seance->getMarque() === $this) {
                 $seance->setMarque(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Exercice[]
+     */
+    public function getExercices(): Collection
+    {
+        return $this->exercices;
+    }
+
+    public function addExercice(Exercice $exercice): self
+    {
+        if (!$this->exercices->contains($exercice)) {
+            $this->exercices[] = $exercice;
+            $exercice->setMarque($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExercice(Exercice $exercice): self
+    {
+        if ($this->exercices->removeElement($exercice)) {
+            // set the owning side to null (unless already changed)
+            if ($exercice->getMarque() === $this) {
+                $exercice->setMarque(null);
             }
         }
 

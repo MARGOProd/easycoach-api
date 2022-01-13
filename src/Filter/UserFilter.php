@@ -3,6 +3,7 @@
 namespace App\Filter;
 
 use App\Annotation\UserAware;
+use App\Entity\Exercice;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Filter\SQLFilter;
 use Doctrine\Common\Annotations\Reader;
@@ -32,7 +33,14 @@ final class UserFilter extends SQLFilter
         if (empty($fieldName) || empty($fieldId)) {
             return '';
         }
-        return sprintf('%s.%s = %s', $targetTableAlias, $fieldName, $fieldId);
+
+        if($targetEntity->getName() == Exercice::class)
+        {
+            return sprintf('(%s.%s = %s or %s.is_public=1)', $targetTableAlias, $fieldName, $fieldId, $targetTableAlias );
+        }else{
+            return sprintf('(%s.%s = %s)', $targetTableAlias, $fieldName, $fieldId );
+
+        }   
     }
 
     public function setAnnotationReader(Reader $reader): void
