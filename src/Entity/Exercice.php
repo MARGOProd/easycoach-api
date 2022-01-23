@@ -21,6 +21,7 @@ use App\Annotation\MarqueAware;
 *       "get"={
 *           "normalization_context"={"groups"="exercices:get"},
 *       },
+*       "post"
 *   }
  * )
  * @MarqueAware(fieldName="marque_id")
@@ -35,13 +36,13 @@ class Exercice
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "exercice:get", "exercices:get"})
+     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "exercice:get", "exercices:get"})
+     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get"})
      */
     private $libelle;
 
@@ -58,7 +59,7 @@ class Exercice
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "exercice:get", "exercices:get"})
+     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get"})
      */
     private $descriptif;
 
@@ -83,6 +84,7 @@ class Exercice
     public function __construct()
     {
         $this->exerciceMateriels = new ArrayCollection();
+        $this->exerciceMuscles = new ArrayCollection();
     }
 
     public function getId(): ?int

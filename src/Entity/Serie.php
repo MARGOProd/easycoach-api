@@ -7,17 +7,21 @@ use App\Repository\SerieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- * * itemOperations={
+ *  normalizationContext={"groups"={"series:get"}, "skip_null_values" = false},
+ *  itemOperations={
  *       "get"={"normalization_context"={"groups"="serie:get"}},
  *       "delete",
  *       "put"
  *   }
  * )
  * @ORM\Entity(repositoryClass=SerieRepository::class)
+ * @ApiFilter(SearchFilter::class, properties={"seance"="exact"})
  */
 class Serie
 {
@@ -25,43 +29,44 @@ class Serie
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get", "serie:get"})
+     * @Groups({"serie:get", "series:get"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Seance::class, inversedBy="series")
-     * @Groups({"serie:get"})
+     * @Groups({"series:get"})
      */
     private $seance;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get", "serie:get"})
+     * @Groups({"serie:get", "series:get"})
      */
     private $type;
 
     /**
      * @ORM\OneToOne(targetEntity=Frequence::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"seance:get", "serie:get"})
+     * @Groups({"serie:get", "series:get"})
      */
     private $frequence;
 
     /**
      * @ORM\OneToMany(targetEntity=SerieExercice::class, mappedBy="serie")
-     * @Groups({"seance:get", "serie:get"})
+     * @Groups({"serie:get", "series:get"})
      */
     private $serieExercices;
 
     /**
      * @ORM\OneToMany(targetEntity=ExerciceRealise::class, mappedBy="serie", orphanRemoval=true)
-     * @Groups({"seance:get", "serie:get"})
+     * @Groups({"series:get", "serie:get",})
      */
     private $exerciceRealises;
 
     /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="serie")
+     * @Groups({"series:get"})
      */
     private $commentaires;
 

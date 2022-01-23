@@ -25,37 +25,37 @@ class ExerciceRealise
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"exerciceRealises:get", "serie:get"})
+     * @Groups({"exerciceRealises:get", "serie:get",})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"exerciceRealises:get", "serie:get"})
+     * @Groups({"exerciceRealises:get", "serie:get",})
      */
     private $repetition;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"exerciceRealises:get", "serie:get"})
+     * @Groups({"exerciceRealises:get", "serie:get",})
      */
     private $occurrence;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"exerciceRealises:get", "serie:get"})
+     * @Groups({"exerciceRealises:get", "serie:get",})
      */
     private $poids;
 
         /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"exerciceRealises:get", "serie:get"})
+     * @Groups({"exerciceRealises:get", "serie:get",})
      */
     private $duree;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"exerciceRealises:get", "serie:get"})
+     * @Groups({"exerciceRealises:get", "serie:get",})
      */
     private $calorie;
 
@@ -67,25 +67,26 @@ class ExerciceRealise
 
     /**
      * @ORM\ManyToOne(targetEntity=SerieExercice::class)
-     * @Groups({"serie:get", "exerciceRealises:get"})
+     * @Groups({"exerciceRealises:get", "serie:get",})
      */
     private $serieExercice;
 
     /**
      * @ORM\ManyToOne(targetEntity=Exercice::class)
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"exerciceRealises:get", "serie:get"})
+     * @Groups({"exerciceRealises:get", "serie:get",})
      */
     private $exercice;
 
     /**
      * @ORM\ManyToOne(targetEntity=Materiel::class, inversedBy="exerciceRealises")
-     * @Groups({"exerciceRealises:get", "serie:get"})
+     * @Groups({"exerciceRealises:get", "serie:get",})
      */
     private $materiel;
 
     /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="exerciceRealise")
+     * @Groups({"exerciceRealises:get", "serie:get",})
      */
     private $commentaires;
 

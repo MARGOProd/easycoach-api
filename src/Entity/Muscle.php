@@ -21,13 +21,13 @@ class Muscle
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "groupeMusculaires:get"})
+     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "groupeMusculaires:get", "commentaireMuscles:get" })
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "groupeMusculaires:get"})
+     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "groupeMusculaires:get", "commentaireMuscles:get"})
      */
     private $libelle;
 
@@ -39,7 +39,7 @@ class Muscle
 
     /**
      * @ORM\ManyToOne(targetEntity=GroupeMusculaire::class, inversedBy="muscles")
-     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get"})
+     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "commentaireMuscles:get"})
      */
     private $groupeMusculaire;
 
@@ -52,6 +52,12 @@ class Muscle
      * @ORM\OneToMany(targetEntity=CommentaireMuscle::class, mappedBy="muscle")
      */
     private $commentaireMuscles;
+
+     /**
+     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "groupeMusculaires:get", "commentaireMuscles:get" })
+     */
+    public $isSelected;
+
 
     public function __construct()
     {
@@ -127,6 +133,18 @@ class Muscle
             }
         }
 
+        return $this;
+    }
+
+
+    public function getIsSelected()
+    {
+        return $this->isSelected;
+    }
+
+    public function setIsSelected(bool $isSelected): self
+    {
+        $this->isSelected = $isSelected;
         return $this;
     }
 

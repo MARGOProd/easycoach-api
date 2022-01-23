@@ -21,7 +21,7 @@ class GroupeMusculaire
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"groupeMusculaires:get", "seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get"})
+     * @Groups({"groupeMusculaires:get", "seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "commentaireMuscles:get"})
      */
     private $id;
 
@@ -36,6 +36,12 @@ class GroupeMusculaire
      * @Groups({"groupeMusculaires:get"})
      */
     private $muscles;
+
+     /**
+     * @Groups({"groupeMusculaires:get", "seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "commentaireMuscles:get"})
+     */
+    public $isSelected;
+
 
     public function __construct()
     {
@@ -56,6 +62,18 @@ class GroupeMusculaire
     {
         $this->libelle = $libelle;
 
+        return $this;
+    }
+
+
+    public function getIsSelected()
+    {
+        return $this->isSelected;
+    }
+
+    public function setIsSelected(bool $isSelected): self
+    {
+        $this->isSelected = $isSelected;
         return $this;
     }
 

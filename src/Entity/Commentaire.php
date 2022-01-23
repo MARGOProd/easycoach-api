@@ -9,6 +9,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Annotation\UserAware;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  
 /**
  * @ApiResource()
@@ -22,6 +24,8 @@ class Commentaire implements OwnerForceInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"seance:get", "serie:get", "client:get"})
+     * @ApiFilter(SearchFilter::class, properties={"client"="exact"})
+     * @Groups({"seance:get", "serie:get", "commentaireMuscles:get"})
      */
     private $id;
 
@@ -52,7 +56,7 @@ class Commentaire implements OwnerForceInterface
 
     /**
      * @ORM\ManyToOne(targetEntity=ExerciceRealise::class, inversedBy="commentaires")
-     * @Groups({"seance:get", "serie:get", "client:get"})
+     * @Groups({"seance:get", "client:get"})
      */
     private $exerciceRealise;
 
@@ -63,7 +67,7 @@ class Commentaire implements OwnerForceInterface
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity=CommentaireMuscle::class, mappedBy="commentaire")
+     * @ORM\OneToMany(targetEntity=CommentaireMuscle::class, mappedBy="commentaire", cascade={"remove"})
      * @Groups({"seance:get", "serie:get", "client:get"})
      */
     private $commentaireMuscles;

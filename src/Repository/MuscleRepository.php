@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\GroupeMusculaire;
 use App\Entity\Muscle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -36,15 +37,15 @@ class MuscleRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Muscle
+    public function findMuscleAndGroupeMusculaire()
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $queryBuilder = $this->createQueryBuilder('muscle');
+            $queryBuilder->select('muscle');
+            // $queryBuilder->join('muscle.groupe_musculaire', 'groupe_muclaire');
+            $queryBuilder->groupBy('groupeMusculaire.id');
+        $queryBuilder->setMaxResults(7);
+        dump($queryBuilder->getQuery());
+        exit();
+        return $queryBuilder->getQuery()->getResult();
     }
-    */
 }

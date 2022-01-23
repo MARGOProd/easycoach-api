@@ -39,7 +39,6 @@ class ExerciceMuscleController extends AbstractController
     }
 
     /**
-     * Test de l'appel API
      * 
      * @Route("/api/exercice_muscles/create", name="api_exercice_muscles_create",  methods={"POST"})
      * 

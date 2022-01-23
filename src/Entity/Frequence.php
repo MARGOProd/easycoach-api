@@ -19,19 +19,19 @@ class Frequence
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get", "serie:get"})
+     * @Groups({"seance:get", "serie:get", "series:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get", "serie:get"})
+     * @Groups({"seance:get", "serie:get", "series:get"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get", "serie:get"})
+     * @Groups({"seance:get","serie:get", "series:get"})
      */
     private $sets;
 
