@@ -29,7 +29,7 @@ class Serie
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"serie:get", "series:get"})
+     * @Groups({"serie:get", "series:get", "seance:get",})
      */
     private $id;
 
@@ -41,32 +41,32 @@ class Serie
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"serie:get", "series:get"})
+     * @Groups({"serie:get", "series:get", "seance:get",})
      */
     private $type;
 
     /**
      * @ORM\OneToOne(targetEntity=Frequence::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"serie:get", "series:get"})
+     * @Groups({"serie:get", "series:get", "seance:get",})
      */
     private $frequence;
 
     /**
      * @ORM\OneToMany(targetEntity=SerieExercice::class, mappedBy="serie")
-     * @Groups({"serie:get", "series:get"})
+     * @Groups({"serie:get", "series:get", "seance:get",})
      */
     private $serieExercices;
 
     /**
      * @ORM\OneToMany(targetEntity=ExerciceRealise::class, mappedBy="serie", orphanRemoval=true)
-     * @Groups({"series:get", "serie:get",})
+     * @Groups({"series:get", "serie:get","seance:get",})
      */
     private $exerciceRealises;
 
     /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="serie")
-     * @Groups({"series:get"})
+     * @Groups({"series:get",})
      */
     private $commentaires;
 

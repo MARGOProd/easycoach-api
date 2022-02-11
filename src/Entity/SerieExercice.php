@@ -4,13 +4,21 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\SerieExerciceRepository;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  normalizationContext={"groups"={"serie_exercices:get"}, "skip_null_values" = false},
+ *  attributes={"order"={"ordre": "ASC"}}
+ * )
  * @ORM\Entity(repositoryClass=SerieExerciceRepository::class)
+ * @ApiFilter(OrderFilter::class, properties={"ordre" : "DESC"}, arguments={"orderParameterName"="order"})
+ * @ApiFilter(SearchFilter::class, properties={"serie"="exact"})
  */
 class SerieExercice
 {
@@ -18,44 +26,45 @@ class SerieExercice
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get", "serie:get", "series:get", "exerciceRealises:get"})
+     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Serie::class, inversedBy="serieExercices")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"serie_exercices:get"})
      */
     private $serie;
 
     /**
      * @ORM\ManyToOne(targetEntity=Exercice::class)
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"seance:get", "serie:get", "series:get", "exerciceRealises:get"})
+     * @Groups({"seance:get","exerciceRealises:get", "serie_exercices:get"})
      */
     private $exercice;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Groups({"seance:get", "serie:get", "series:get", "exerciceRealises:get"})
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get"})
      */
     private $repetition;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"seance:get", "serie:get", "series:get", "exerciceRealises:get"})
+     * @Groups({"seance:get","exerciceRealises:get", "serie_exercices:get"})
      */
     private $poids;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"seance:get", "serie:get", "series:get", "exerciceRealises:get"})
+     * @Groups({"seance:get","exerciceRealises:get", "serie_exercices:get"})
      */
     private $calorie;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"seance:get", "serie:get", "series:get", "exerciceRealises:get"})
+     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get"})
      */
     private $duree;
 
@@ -63,6 +72,12 @@ class SerieExercice
      * @ORM\ManyToOne(targetEntity=Materiel::class, inversedBy="serieExercices")
      */
     private $materiel;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"seance:get","exerciceRealises:get", "serie_exercices:get"})
+     */
+    private $ordre;
 
     public function getId(): ?int
     {
@@ -149,6 +164,18 @@ class SerieExercice
     public function setMateriel(?Materiel $materiel): self
     {
         $this->materiel = $materiel;
+
+        return $this;
+    }
+
+    public function getOrdre(): ?int
+    {
+        return $this->ordre;
+    }
+
+    public function setOrdre(?int $ordre): self
+    {
+        $this->ordre = $ordre;
 
         return $this;
     }

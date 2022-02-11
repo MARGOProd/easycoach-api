@@ -25,37 +25,37 @@ class ExerciceRealise
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"exerciceRealises:get", "serie:get",})
+     * @Groups({"exerciceRealises:get"})
      */
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Groups({"exerciceRealises:get", "serie:get",})
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"exerciceRealises:get"})
      */
     private $repetition;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"exerciceRealises:get", "serie:get",})
+     * @Groups({"exerciceRealises:get"})
      */
     private $occurrence;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"exerciceRealises:get", "serie:get",})
+     * @Groups({"exerciceRealises:get"})
      */
     private $poids;
 
-        /**
+    /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"exerciceRealises:get", "serie:get",})
+     * @Groups({"exerciceRealises:get"})
      */
     private $duree;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"exerciceRealises:get", "serie:get",})
+     * @Groups({"exerciceRealises:get"})
      */
     private $calorie;
 
@@ -67,26 +67,26 @@ class ExerciceRealise
 
     /**
      * @ORM\ManyToOne(targetEntity=SerieExercice::class)
-     * @Groups({"exerciceRealises:get", "serie:get",})
+     * @Groups({"exerciceRealises:get"})
      */
     private $serieExercice;
 
     /**
      * @ORM\ManyToOne(targetEntity=Exercice::class)
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"exerciceRealises:get", "serie:get",})
+     * @Groups({"exerciceRealises:get"})
      */
     private $exercice;
 
     /**
      * @ORM\ManyToOne(targetEntity=Materiel::class, inversedBy="exerciceRealises")
-     * @Groups({"exerciceRealises:get", "serie:get",})
+     * @Groups({"exerciceRealises:get"})
      */
     private $materiel;
 
     /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="exerciceRealise")
-     * @Groups({"exerciceRealises:get", "serie:get",})
+     * @Groups({"exerciceRealises:get"})
      */
     private $commentaires;
 

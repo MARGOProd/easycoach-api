@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\Etude;
 use App\Entity\Device;
 use App\Entity\Marque;
+use App\Security\UserAuthenticator;
 use OpenApi\Annotations as OA;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -96,18 +97,16 @@ class AccountController extends AbstractController
             $response = new Response("'Error : User or Device Exist / user unhautorize...'", 500, ['Content-Type' => 'application/json+ld']);
         }
         return $response;
-        // return new JsonResponse(
-        // );
+
     }
 
 
     /**
-     * Enregistrement du compte
-     * 
-     * @Route("/api/account/register", name="api_account_register", methods={"POST"})
+     * Enregistrement du compte depuis un device
+     * @Route("/api/account/register/device", name="api_account_register_device", methods={"POST"})
      * 
      */
-    public function register(Request $request, SerializerInterface $serializer)
+    public function registerFromDevice(Request $request, SerializerInterface $serializer)
     {
         try {
             $user = $this->security->getUser();
@@ -119,82 +118,143 @@ class AccountController extends AbstractController
             if ($params_condition) {
                 if (isset($content["marque"]))
                 {
-                    $marque = $marqueRepository->findOneBy(['libelle' => $content["marque"]["libelle"]]);
+                    $marqueId = substr($content["marque"], -1);
+                    $marque = $marqueRepository->findOneBy(['id' => $marqueId]);
                     if($marque != null)
                     {
-                    $user = $userRepository->findOneBy(array('email' => $content['deviceKey']));
-                    if($user == null )
-                    {
-                        // Création du User de Demo avec UUID
-                        $user = new User();
-                        $user->setNom($content['deviceKey']);
-                        $user->setPrenom($content['deviceKey']);
-                        $user->setEmail($content['deviceKey']);
-                        $user->setMarque($marque);
-                        $password = $this->encoder->encodePassword($user, 'ThisUserDoesntHaveAnyPassword');
-                        $user->setPassword($password);
-                        $this->em->persist($user);
-                        $this->em->flush();
+                        // check if user exist (2 conditions email et device key n'existe pas dans table user)
                         $user = $userRepository->findOneBy(array('email' => $content['deviceKey']));
-                    }
-                    $device = $deviceRepository->findOneBy(array('deviceKey' => $content['deviceKey']));
-                    if($device == null )
-                    {
-                        // Creation du Device
-                        $device = new Device();
-                        $device->setDeviceKey($content['deviceKey']);
-                        $device->setUser($user);
-                        $this->em->persist($device);
-                        $this->em->flush();
-                        $this->em->refresh($device->setUser($user));
-                        $device = $deviceRepository->findOneBy(array('deviceKey' => $content['deviceKey']));
-                        $user = $userRepository->findOneBy(array('email' => $content['deviceKey']));
-                        if (!is_null($user)) {
-                            if (filter_var($content["email"], FILTER_VALIDATE_EMAIL)) {
-                                
-                                // Update du User
+                        if($user == null)
+                        {
+                            $user = $userRepository->findOneBy(array('email' => $content['email']));
+                        }
+                        if($user == null )
+                        {
+                            // check if device Exist
+                            $device = $deviceRepository->findOneBy(array('deviceKey' => $content['deviceKey']));
+                            if($device == null )
+                            {
+                                // Création du User
+                                $user = new User();
                                 $user->setNom($content['nom']);
                                 $user->setPrenom($content['prenom']);
                                 $user->setEmail($content['email']);
+                                $user->setMarque($marque);
                                 $password = $this->encoder->encodePassword($user, $content['password']);
                                 $user->setPassword($password);
-                                $user->setMarque($marque);
                                 $this->em->persist($user);
                                 $this->em->flush();
+                                $user = $userRepository->findOneBy(array('email' => $content['email']));
+                            
+                                // Creation du Device
+                                $device = new Device();
+                                $device->setDeviceKey($content['deviceKey']);
+                                $device->setUser($user);
+                                $this->em->persist($device);
+                                $this->em->flush();
+                                $this->em->refresh($device->setUser($user));
+                                $device = $deviceRepository->findOneBy(array('deviceKey' => $content['deviceKey']));
                                 $response = new Response($serializer->serialize($user, 'json'), 201, ['Content-Type' => 'application/json+ld']);
-                            } else {
-                                $response = new JsonResponse(['success' => false, 'message' => ' Email not well formed.'], 422);
-                            }
-                        } else {
-                            $response = new JsonResponse(['success' => false, 'message' => " User doesn't Exist / user unhautorize..."], 500);
+                            }else{
+                                $response = new JsonResponse(['success' => false, 'message' => 'Ce téléphone est déjà associé à un compte'], 422);
+                            }  
+                        }else{
+                            $response = new JsonResponse(['success' => false, 'message' => "Cet utilisateur existe déjà"], 500);
                         }
                     }else{
-                        $response = new JsonResponse(['success' => false, 'message' => ' Device ever associate to user.'], 422);
-                    }  
-                    }else{
-                        $response = new JsonResponse(['success' => false, 'message' => " Marque doesn't Exist / user unhautorize..."], 500);
+                        $response = new JsonResponse(['success' => false, 'message' => "Erreur d'association du user à la marque"], 500);
                     }     
                 }else{
-                    $response = new JsonResponse(['success' => false, 'message' => ' Marque Attribue manquant'], 500);
+                    $response = new JsonResponse(['success' => false, 'message' => 'Attribut marque manquant'], 500);
                 }
             } else {
-                $response = new JsonResponse(['success' => false, 'message' => ' Error : Arguments are missing or not well formed.'], 422);
+                $response = new JsonResponse(['success' => false, 'message' => '1 ou plusieurs attributs sont manquants et empêchent la création du user.'], 422);
             }
         } catch (UniqueConstraintViolationException $e) {
-            $response = new Response("'message : This email is already in use.'", 409, ['Content-Type' => 'application/json+ld']);
-        } catch (Exception $e) {
-            $response = new Response("'message : An error occured'", 500, ['Content-Type' => 'application/json+ld']);
+            $response = new JsonResponse(['success' => false, 'message' => 'Cet email existe déjà.'], 409);
         }
         return $response;
     }
 
     /**
+     * Login depuis un device
+     * @Route("/api/account/login/device", name="api_account_login_device", methods={"POST"})
+     */
+    public function loginFromDevice(Request $request, SerializerInterface $serializer, UserPasswordEncoderInterface $encoder)
+    {
+        try {
+            $user = $this->security->getUser();
+            $userRepository = $this->em->getRepository(User::class);
+            $deviceRepository = $this->em->getRepository(Device::class);
+            $content = json_decode($request->getContent(), true);
+            $params_condition = isset($content["email"]) && isset($content["password"]) && isset($content['deviceKey']);
+            if ($params_condition) {
+                // check if user exist 
+                $user = $userRepository->findOneBy(array('email' => $content['email']));
+                // check if device Exist
+                if($user != null )
+                {
+                    // check if password correspond
+                    if($encoder->isPasswordValid($user, $content["password"]))
+                    {
+                        // check if Device exist
+                        $device = $deviceRepository->findOneBy(array('deviceKey' => $content['deviceKey']));
+                        // s'il n'héxiste pas on l'assigne en vérifiant selon sa licence ou la valeur par défaut(fonction assign)
+                        if($device == null)
+                        {
+                            $reponseAssign = $this->assign($request, $user);
+                            $content =  json_decode($reponseAssign->getContent(), true);
+                            if($content["statusCode"] == 201)
+                            {
+                                $response = new Response($serializer->serialize($user, 'json'), 200, ['Content-Type' => 'application/json+ld']);
+                            }else{
+                                $response = new JsonResponse(['success' => false, 'message' => $content["message"]], 500);
+                            }
+                        }else{
+                            // Si device exist on check si device est associé à ce user
+                            if($user->getId() == $device->getUser()->getId())
+                            {
+                                $response = new Response($serializer->serialize($user, 'json'), 200, ['Content-Type' => 'application/json+ld']);
+                            }else{
+                                // si non on réassign le device à l'utilisateur
+                                $device->setUser($user);
+                                $this->em->persist($device);
+                                $this->em->flush();
+                                $this->em->refresh($device->setUser($user));
+                                if($user->getId() == $device->getUser()->getId())
+                                {
+                                    $response = new Response($serializer->serialize($user, 'json'), 200, ['Content-Type' => 'application/json+ld']);
+                                }else{
+                                    $response = new JsonResponse(['success' => false, 'message' => "ToDo re-assign device"], 500);
+                                }
+                            }
+                        }
+                    }else{
+                        $response = new JsonResponse(['success' => false, 'message' => "Le mot de passe ne correspond pas"], 500);
+                    }  
+                }else{
+                    $response = new JsonResponse(['success' => false, 'message' => "Aucun compte associé à cet email"], 500);
+                }
+            } else {
+                $response = new JsonResponse(['success' => false, 'message' => '1 ou plusieurs attributs sont manquants.'], 422);
+            }
+        } catch (UniqueConstraintViolationException $e) {
+            $response = new JsonResponse(['success' => false, 'message' => 'Cet email existe déjà.'], 409);
+        }
+        return $response;
+    }
+
+
+    /**
      * Assignation d'un device à un compte
      * @Route("/api/account/assign", name="api_account_assign", methods={"POST"})
      */
-    public function assign(Request $request)
+    public function assign(Request $request, User $user = null)
     {
-        $user = $this->security->getUser();
+        if($user == null)
+        {
+            $user = $this->security->getUser();
+        }
         $deviceRepository = $this->em->getRepository(Device::class);
         $userRepository = $this->em->getRepository(User::class);
         $content = json_decode($request->getContent(), true);
@@ -212,10 +272,10 @@ class AccountController extends AbstractController
                 $this->em->flush();
                 $response = ['success' => true, 'message' => 'Device Registered for User ' . $content['email'], 'statusCode' => 201];
             } else {
-                $response = ['success' => false, 'message' =>  'User a atteint son nombre limite de devices' . $content['email'], 'statusCode' => 402];
+                $response = ['success' => false, 'message' =>  "Vous avez atteint le limite d'appareils pour ce compte : " . $content['email'], 'statusCode' => 402];
             }
         } else {
-            $response = ['success' => false, 'error' => 'User not found or incorrect password', 'statusCode' => 401];
+            $response = ['success' => false, 'message' => 'User not found or incorrect password', 'statusCode' => 401];
         }
         return new JsonResponse(
             $response,

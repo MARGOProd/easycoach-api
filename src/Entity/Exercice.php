@@ -36,19 +36,19 @@ class Exercice
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get"})
+     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get", "serie_exercices:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get"})
+     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get", "serie_exercices:get"})
      */
     private $libelle;
 
     /**
      * @ORM\OneToMany(targetEntity=ExerciceMuscle::class, mappedBy="exercice")
-     * @Groups({"exercice:get"})
+     * @Groups({"exercice:get", "serie_exercices:get"})
      */
     private $exerciceMuscles;
 
@@ -59,7 +59,7 @@ class Exercice
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get"})
+     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get", "serie_exercices:get"})
      */
     private $descriptif;
 
@@ -80,6 +80,11 @@ class Exercice
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $isPublic;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ExerciceCategorie::class, inversedBy="exercices")
+     */
+    private $exerciceCategorie;
 
     public function __construct()
     {
@@ -235,6 +240,18 @@ class Exercice
     public function setIsPublic(?bool $isPublic): self
     {
         $this->isPublic = $isPublic;
+
+        return $this;
+    }
+
+    public function getExerciceCategorie(): ?ExerciceCategorie
+    {
+        return $this->exerciceCategorie;
+    }
+
+    public function setExerciceCategorie(?ExerciceCategorie $exerciceCategorie): self
+    {
+        $this->exerciceCategorie = $exerciceCategorie;
 
         return $this;
     }
