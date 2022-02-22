@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\SerieRepository;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -53,22 +54,30 @@ class Serie
     private $frequence;
 
     /**
-     * @ORM\OneToMany(targetEntity=SerieExercice::class, mappedBy="serie")
+     * @ORM\OneToMany(targetEntity=SerieExercice::class, mappedBy="serie", cascade={"remove"})
      * @Groups({"serie:get", "series:get", "seance:get",})
+     * @ApiSubresource
      */
     private $serieExercices;
 
     /**
-     * @ORM\OneToMany(targetEntity=ExerciceRealise::class, mappedBy="serie", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=ExerciceRealise::class, mappedBy="serie", orphanRemoval=true, cascade={"remove"})
      * @Groups({"series:get", "serie:get","seance:get",})
+     * @ApiSubresource
      */
     private $exerciceRealises;
 
     /**
-     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="serie")
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="serie", cascade={"remove"})
      * @Groups({"series:get",})
+     * @ApiSubresource
      */
     private $commentaires;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $ordre;
 
     public function __construct()
     {
@@ -204,6 +213,18 @@ class Serie
                 $commentaire->setSerie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOrdre(): ?int
+    {
+        return $this->ordre;
+    }
+
+    public function setOrdre(?int $ordre): self
+    {
+        $this->ordre = $ordre;
 
         return $this;
     }

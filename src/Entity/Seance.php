@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\SeanceRepository;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -30,38 +31,39 @@ class Seance implements OwnerForceInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"seance:post", "seance:get", "seances:get", "client:get", "serie:get"})
+     * @Groups({"seance:post", "seance:get", "seances:get", "client:get", "serie:get", "series:get"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="seance")
-     * @Groups({"seance:post", "seance:get", "seances:get",})
+     * @Groups({"seance:post", "seance:get", "seances:get", "series:get"})
      */
     private $client;
 
     /**
      * @ORM\Column(type="string",)
-     * @Groups({"seance:post", "seance:get", "seances:get", "client:get", "serie:get"})
+     * @Groups({"seance:post", "seance:get", "seances:get", "client:get", "serie:get", "series:get"})
      */
     private $debut;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"seance:post","seance:get", "seances:get", "client:get", "serie:get"})
+     * @Groups({"seance:post","seance:get", "seances:get", "client:get", "serie:get", "series:get"})
      */
     private $libelle;
 
     /**
      * @ORM\OneToMany(targetEntity=Serie::class, mappedBy="seance")
      * @Groups({"client:get", "seance:get"})
+     * @ApiSubresource
      */
     private $series;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="seances")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
-     * @Groups({"seance:post", "seance:get", "seances:get"})
+     * @Groups({"seance:post", "seance:get", "seances:get", "series:get"})
      */
     private $user;
 
@@ -74,13 +76,14 @@ class Seance implements OwnerForceInterface
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"seance:post", "seance:get", "seances:get", "client:get", "serie:get"})
+     * @Groups({"seance:post", "seance:get", "seances:get", "client:get", "serie:get", "series:get"})
      */
     private $type;
 
     /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="seance")
-     * @Groups({"seance:get", "seances:get"})
+     * @Groups({"seance:get", "seances:get", "series:get"})
+     * @ApiSubresource
      */
     private $commentaires;
 
@@ -228,7 +231,7 @@ class Seance implements OwnerForceInterface
     }
 
     /**
-     * @Groups({"seance:get", "seances:get"})
+     * TODO A REFAIRE
      */
     public function getRepetitionExercice()
     {
@@ -253,7 +256,7 @@ class Seance implements OwnerForceInterface
                                 $exerciceRepetitions += [$exercicesRealise->getExercice()->getLibelle() => ['fait' => $exercicesRealise->getRepetition()]];
                             }
                         }
-                        if($exercicesRealise->getSerieExercice() != null)
+                        if($exercicesRealise->getSerieExercice() != null && count($exercicesRealise->getSerieExercice())>0 )
                         {
                             $serieExercice = $exercicesRealise->getSerieExercice();
                             if(isset($exerciceRepetitions[$serieExercice->getExercice()->getLibelle()]))

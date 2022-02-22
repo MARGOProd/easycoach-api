@@ -7,9 +7,11 @@ use App\Repository\DeviceRepository;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  normalizationContext={"groups"={"device:get"}, "skip_null_values" = false},
+ * )
  * @ORM\Entity(repositoryClass=DeviceRepository::class)
     * @ApiFilter(SearchFilter::class, properties={"deviceKey"="exact"})     
  */
@@ -19,17 +21,20 @@ class Device
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"device:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"device:get"})
      */
     private $deviceKey;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="devices")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"device:get"})
      */
     private $user;
 

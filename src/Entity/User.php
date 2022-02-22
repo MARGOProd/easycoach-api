@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource()
@@ -28,21 +29,25 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"device:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=150)
+     * @Groups({"device:get"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=150, nullable=true)
+     * @Groups({"device:get"})
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255,  unique=true)
+     * @Groups({"device:get"})
      */
     private $email;
 
@@ -53,12 +58,14 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"device:get"})
      */
     private $roles = [];
 
     /**
      * @ORM\ManyToOne(targetEntity=Marque::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"device:get"})
      */
     private $marque;
 
@@ -87,6 +94,11 @@ class User implements UserInterface
      */
     private $exercices;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UserExercice::class, mappedBy="user")
+     */
+    private $userExercices;
+
 
     public function __construct()
     {
@@ -95,6 +107,7 @@ class User implements UserInterface
         $this->seances = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
         $this->exercices = new ArrayCollection();
+        $this->userExercices = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -370,6 +383,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($exercice->getUser() === $this) {
                 $exercice->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserExercice[]
+     */
+    public function getUserExercices(): Collection
+    {
+        return $this->userExercices;
+    }
+
+    public function addUserExercice(UserExercice $userExercice): self
+    {
+        if (!$this->userExercices->contains($userExercice)) {
+            $this->userExercices[] = $userExercice;
+            $userExercice->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserExercice(UserExercice $userExercice): self
+    {
+        if ($this->userExercices->removeElement($userExercice)) {
+            // set the owning side to null (unless already changed)
+            if ($userExercice->getUser() === $this) {
+                $userExercice->setUser(null);
             }
         }
 

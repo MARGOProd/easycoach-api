@@ -25,55 +25,55 @@ class Frequence
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get"})
+     * @Groups({"seance:get", "series:get",})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get"})
+     * @Groups({"seance:get", "series:get",})
      */
     private $type;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get"})
+     * @Groups({"seance:get", "series:get",})
      */
     private $sets;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"seance:get"})
+     * @Groups({"seance:get", "series:get",})
      */
     private $reps;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"seance:get"})
+     * @Groups({"seance:get", "series:get",})
      */
     private $exerciceTime;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"seance:get"})
+     * @Groups({"seance:get", "series:get",})
      */
     private $restTime;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"seance:get"})
+     * @Groups({"seance:get", "series:get",})
      */
     private $breakTime;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"seance:get"})
+     * @Groups({"seance:get", "series:get",})
      */
     private $startDelay;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"seance:get"})
+     * @Groups({"seance:get", "series:get",})
      */
     private $limitTime;
 

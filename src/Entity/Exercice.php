@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ExerciceRepository;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,7 +16,7 @@ use App\Annotation\UserAware;
 use App\Annotation\MarqueAware;
 /**
  * @ApiResource(
- *  normalizationContext={"groups"={"exercice:get"}, "skip_null_values" = false},
+ *  normalizationContext={"groups"={"exercices:get"}, "skip_null_values" = false},
  *  denormalizationContext={"groups"={"exercice:post"}},
  *  collectionOperations={
 *       "get"={
@@ -36,13 +37,13 @@ class Exercice
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get", "serie_exercices:get"})
+     * @Groups({"user_exercices:get","exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get", "serie_exercices:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get", "serie_exercices:get"})
+     * @Groups({"user_exercices:get","exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get", "serie_exercices:get"})
      */
     private $libelle;
 
@@ -59,7 +60,7 @@ class Exercice
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get", "serie_exercices:get"})
+     * @Groups({"user_exercices:get", "exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get", "serie_exercices:get"})
      */
     private $descriptif;
 
@@ -78,18 +79,26 @@ class Exercice
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"user_exercices:get", "exerciceRealises:get", "serie_exercices:get", "exercice:get", "exercices:get", "exercice:post",})
      */
     private $isPublic;
 
     /**
      * @ORM\ManyToOne(targetEntity=ExerciceCategorie::class, inversedBy="exercices")
+     * @Groups({"exercice:get", "exercices:get", "exercice:post",})
      */
     private $exerciceCategorie;
+
+    /**
+     * @ORM\OneToMany(targetEntity=UserExercice::class, mappedBy="exercice")
+     */
+    private $userExercices;
 
     public function __construct()
     {
         $this->exerciceMateriels = new ArrayCollection();
         $this->exerciceMuscles = new ArrayCollection();
+        $this->userExercices = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -252,6 +261,36 @@ class Exercice
     public function setExerciceCategorie(?ExerciceCategorie $exerciceCategorie): self
     {
         $this->exerciceCategorie = $exerciceCategorie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserExercice[]
+     */
+    public function getUserExercices(): Collection
+    {
+        return $this->userExercices;
+    }
+
+    public function addUserExercice(UserExercice $userExercice): self
+    {
+        if (!$this->userExercices->contains($userExercice)) {
+            $this->userExercices[] = $userExercice;
+            $userExercice->setExercice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserExercice(UserExercice $userExercice): self
+    {
+        if ($this->userExercices->removeElement($userExercice)) {
+            // set the owning side to null (unless already changed)
+            if ($userExercice->getExercice() === $this) {
+                $userExercice->setExercice(null);
+            }
+        }
 
         return $this;
     }
