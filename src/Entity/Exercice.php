@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\ExistsFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Annotation\UserAware;
 use App\Annotation\MarqueAware;
@@ -30,6 +31,7 @@ use App\Annotation\MarqueAware;
  * @ORM\Entity(repositoryClass=ExerciceRepository::class)
  * @ApiFilter(SearchFilter::class, properties={"libelle"="partial"})
  * @ApiFilter(OrderFilter::class, properties={"id", "libelle"}, arguments={"orderParameterName"="order"})
+ * @ApiFilter(ExistsFilter::class, properties={"exerciceCategorie"})
  */
 class Exercice
 {

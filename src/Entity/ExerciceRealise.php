@@ -90,6 +90,12 @@ class ExerciceRealise
      */
     private $commentaires;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"exerciceRealises:get"})
+     */
+    private $ordre;
+
 
 
     public function __construct()
@@ -304,6 +310,18 @@ class ExerciceRealise
         }
 
         return $tauxRealisation;
+    }
+
+    public function getOrdre(): ?int
+    {
+        return $this->ordre;
+    }
+
+    public function setOrdre(?int $ordre): self
+    {
+        $this->ordre = $ordre;
+
+        return $this;
     }
 
 }

@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiFilter(SearchFilter::class, properties={"exercice.id"="exact"})
  * @UserAware(fieldName="user_id")
  */
-class UserExercice
+class UserExercice implements OwnerForceInterface
 {
     /**
      * @ORM\Id
@@ -31,7 +31,7 @@ class UserExercice
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="userExercices")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      * @Groups({"user_exercices:get"})
      */
     private $user;

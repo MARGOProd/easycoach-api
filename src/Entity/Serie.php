@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ApiResource(
@@ -23,6 +24,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * )
  * @ORM\Entity(repositoryClass=SerieRepository::class)
  * @ApiFilter(SearchFilter::class, properties={"seance"="exact"})
+ * @ApiFilter(OrderFilter::class, properties={"id","ordre"}, arguments={"orderParameterName"="order"})
+ * 
  */
 class Serie
 {
@@ -30,7 +33,7 @@ class Serie
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"serie:get", "series:get", "seance:get",})
+     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get"})
      */
     private $id;
 
@@ -42,14 +45,14 @@ class Serie
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"serie:get", "series:get", "seance:get",})
+     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get"})
      */
     private $type;
 
     /**
      * @ORM\OneToOne(targetEntity=Frequence::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"serie:get", "series:get", "seance:get",})
+     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get"})
      */
     private $frequence;
 
@@ -76,6 +79,8 @@ class Serie
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"serie:get", "series:get", "seance:get",})
+     * 
      */
     private $ordre;
 
