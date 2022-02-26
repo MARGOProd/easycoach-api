@@ -26,10 +26,6 @@ class Marque
      */
     private $libelle;
 
-    /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="marque")
-     */
-    private $users;
 
     /**
      * @ORM\OneToMany(targetEntity=Client::class, mappedBy="marque")
@@ -46,12 +42,17 @@ class Marque
      */
     private $exercices;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UserMarque::class, mappedBy="Marque")
+     */
+    private $userMarques;
+
     public function __construct()
     {
-        $this->users = new ArrayCollection();
         $this->clients = new ArrayCollection();
         $this->seances = new ArrayCollection();
         $this->exercices = new ArrayCollection();
+        $this->userMarques = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -67,36 +68,6 @@ class Marque
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setMarque($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getMarque() === $this) {
-                $user->setMarque(null);
-            }
-        }
 
         return $this;
     }
@@ -185,6 +156,36 @@ class Marque
             // set the owning side to null (unless already changed)
             if ($exercice->getMarque() === $this) {
                 $exercice->setMarque(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserMarque[]
+     */
+    public function getUserMarques(): Collection
+    {
+        return $this->userMarques;
+    }
+
+    public function addUserMarque(UserMarque $userMarque): self
+    {
+        if (!$this->userMarques->contains($userMarque)) {
+            $this->userMarques[] = $userMarque;
+            $userMarque->setMarque($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserMarque(UserMarque $userMarque): self
+    {
+        if ($this->userMarques->removeElement($userMarque)) {
+            // set the owning side to null (unless already changed)
+            if ($userMarque->getMarque() === $this) {
+                $userMarque->setMarque(null);
             }
         }
 

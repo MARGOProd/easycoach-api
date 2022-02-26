@@ -82,9 +82,9 @@ class OwnerForceNormalizer implements ContextAwareNormalizerInterface, ContextAw
             }
             $user = $token->getUser();
             $objectInfo = $this->reflector->classReflector()->reflect($type);
-            if ($objectInfo->hasProperty('marque')) {
-                $object->setMarque($user->getMarque());
-            }
+            // if ($objectInfo->hasProperty('marque')) {
+            //     $object->setMarque($user->getMarque());
+            // }
             if ($objectInfo->hasProperty('user')) {
                 $object->setUser($user);
             }

@@ -12,7 +12,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
-
+use App\Annotation\UserAware;
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -22,7 +22,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     message="This email already exists."
  * )
  * @ApiFilter(OrderFilter::class, properties={"id", "prenom" : "DESC", "nom"}, arguments={"orderParameterName"="order"})
- */
+ * @UserAware(fieldName="id")
+*/
 class User implements UserInterface
 {
     /**
@@ -62,12 +63,6 @@ class User implements UserInterface
      */
     private $roles = [];
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Marque::class, inversedBy="users")
-     * @ORM\JoinColumn(nullable=false)
-     * @Groups({"device:get"})
-     */
-    private $marque;
 
     /**
      * @ORM\OneToMany(targetEntity=Device::class, mappedBy="user")
@@ -99,6 +94,11 @@ class User implements UserInterface
      */
     private $userExercices;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UserMarque::class, mappedBy="user")
+     */
+    private $userMarques;
+
 
     public function __construct()
     {
@@ -108,6 +108,7 @@ class User implements UserInterface
         $this->commentaires = new ArrayCollection();
         $this->exercices = new ArrayCollection();
         $this->userExercices = new ArrayCollection();
+        $this->userMarques = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -175,18 +176,6 @@ class User implements UserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
-
-        return $this;
-    }
-
-    public function getMarque(): ?Marque
-    {
-        return $this->marque;
-    }
-
-    public function setMarque(?Marque $marque): self
-    {
-        $this->marque = $marque;
 
         return $this;
     }
@@ -413,6 +402,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($userExercice->getUser() === $this) {
                 $userExercice->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserMarque[]
+     */
+    public function getUserMarques(): Collection
+    {
+        return $this->userMarques;
+    }
+
+    public function addUserMarque(UserMarque $userMarque): self
+    {
+        if (!$this->userMarques->contains($userMarque)) {
+            $this->userMarques[] = $userMarque;
+            $userMarque->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserMarque(UserMarque $userMarque): self
+    {
+        if ($this->userMarques->removeElement($userMarque)) {
+            // set the owning side to null (unless already changed)
+            if ($userMarque->getUser() === $this) {
+                $userMarque->setUser(null);
             }
         }
 

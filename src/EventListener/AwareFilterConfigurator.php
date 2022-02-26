@@ -38,10 +38,10 @@ final class AwareFilterConfigurator
                 $filter->setAnnotationReader($this->reader);
             }else{
                 //It's an ADMIN
-                if($user->getMarque() != null){
+                if($user->getUserMarques()[0] != null){
                     //It's a Marque ADMIN
                     $filter = $this->em->getFilters()->enable('marque_filter');
-                    $filter->setParameter('id', $user->getMarque()->getId()); //TODO A revoir pour fixer la table
+                    $filter->setParameter('id', $user->getUserMarques()[0]->getId()); //TODO A revoir pour fixer la table
                     $filter->setAnnotationReader($this->reader);
                 }else{
                     //The Marque ADMIN do not have a specific filter. The response will handle in another file.

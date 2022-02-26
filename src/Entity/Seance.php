@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Annotation\UserAware;
 use App\Annotation\MarqueAware;
-use App\Annotation\ClientAware;
 /**
  * @ApiResource(
  *  normalizationContext={"groups"={"seances:get"}, "skip_null_values" = false},
@@ -24,7 +23,6 @@ use App\Annotation\ClientAware;
  * )
  * @MarqueAware(fieldName="marque_id")
  * @UserAware(fieldName="user_id")
- * @ClientAware(fieldName="client_id")
  * @ORM\Entity(repositoryClass=SeanceRepository::class)
  */
 class Seance implements OwnerForceInterface
