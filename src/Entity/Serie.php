@@ -12,6 +12,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Filter\Validator\Length;
 
 /**
  * @ApiResource(
@@ -51,13 +52,14 @@ class Serie
     /**
      * @ORM\OneToOne(targetEntity=Frequence::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"serie:get"})
+     * @Groups({"serie:get", "series:get"})
      */
     private $frequence;
 
     /**
      * @ORM\OneToMany(targetEntity=SerieExercice::class, mappedBy="serie", cascade={"remove"})
      * @ApiSubresource
+     * @Groups({"serie:get"})
      */
     private $serieExercices;
 
@@ -69,14 +71,14 @@ class Serie
 
     /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="serie", cascade={"remove"})
-     * @Groups({"series:get",})
+     * @Groups({"serie:get","serie_exercices:get"})
      * @ApiSubresource
      */
     private $commentaires;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"serie:get", "series:get", "seance:get",})
+     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get"})
      * 
      */
     private $ordre;
@@ -229,6 +231,20 @@ class Serie
         $this->ordre = $ordre;
 
         return $this;
+    }
+
+    /**
+     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get"})
+     */
+    public function getVerouillee()
+    {
+        if(count($this->getExerciceRealises()) > 0)
+        {
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
 }

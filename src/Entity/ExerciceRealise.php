@@ -67,34 +67,46 @@ class ExerciceRealise
 
     /**
      * @ORM\ManyToOne(targetEntity=SerieExercice::class)
-     * @Groups({"exerciceRealises:get"})
+     * @Groups({"serie:get", "exerciceRealises:get"})
      */
     private $serieExercice;
 
     /**
      * @ORM\ManyToOne(targetEntity=Exercice::class)
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"exerciceRealises:get"})
+     * @Groups({"serie:get", "exerciceRealises:get"})
      */
     private $exercice;
 
     /**
      * @ORM\ManyToOne(targetEntity=Materiel::class, inversedBy="exerciceRealises")
-     * @Groups({"exerciceRealises:get"})
+     * @Groups({"serie:get", "exerciceRealises:get"})
      */
     private $materiel;
 
     /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="exerciceRealise")
-     * @Groups({"exerciceRealises:get"})
+     * @Groups({"serie:get", "exerciceRealises:get"})
      */
     private $commentaires;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"exerciceRealises:get"})
+     * @Groups({"serie:get", "exerciceRealises:get"})
      */
     private $ordre;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"serie:get", "exerciceRealises:get"})
+     */
+    private $amplitude;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"serie:get", "exerciceRealises:get"})
+     */
+    private $tempo;
 
 
 
@@ -320,6 +332,30 @@ class ExerciceRealise
     public function setOrdre(?int $ordre): self
     {
         $this->ordre = $ordre;
+
+        return $this;
+    }
+
+    public function getAmplitude(): ?int
+    {
+        return $this->amplitude;
+    }
+
+    public function setAmplitude(?int $amplitude): self
+    {
+        $this->amplitude = $amplitude;
+
+        return $this;
+    }
+
+    public function getTempo(): ?int
+    {
+        return $this->tempo;
+    }
+
+    public function setTempo(?int $tempo): self
+    {
+        $this->tempo = $tempo;
 
         return $this;
     }

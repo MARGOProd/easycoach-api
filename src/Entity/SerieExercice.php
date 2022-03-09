@@ -79,6 +79,18 @@ class SerieExercice
      */
     private $ordre;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"seance:get","exerciceRealises:get", "serie_exercices:get"})
+     */
+    private $amplitude;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"seance:get","exerciceRealises:get", "serie_exercices:get"})
+     */
+    private $tempo;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -176,6 +188,30 @@ class SerieExercice
     public function setOrdre(?int $ordre): self
     {
         $this->ordre = $ordre;
+
+        return $this;
+    }
+
+    public function getAmplitude(): ?int
+    {
+        return $this->amplitude;
+    }
+
+    public function setAmplitude(?int $amplitude): self
+    {
+        $this->amplitude = $amplitude;
+
+        return $this;
+    }
+
+    public function getTempo(): ?int
+    {
+        return $this->tempo;
+    }
+
+    public function setTempo(?int $tempo): self
+    {
+        $this->tempo = $tempo;
 
         return $this;
     }
