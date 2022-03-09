@@ -39,7 +39,6 @@ class Serie
 
     /**
      * @ORM\ManyToOne(targetEntity=Seance::class, inversedBy="series")
-     * @Groups({"series:get"})
      */
     private $seance;
 
@@ -52,20 +51,18 @@ class Serie
     /**
      * @ORM\OneToOne(targetEntity=Frequence::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get"})
+     * @Groups({"serie:get"})
      */
     private $frequence;
 
     /**
      * @ORM\OneToMany(targetEntity=SerieExercice::class, mappedBy="serie", cascade={"remove"})
-     * @Groups({"serie:get", "series:get", "seance:get",})
      * @ApiSubresource
      */
     private $serieExercices;
 
     /**
      * @ORM\OneToMany(targetEntity=ExerciceRealise::class, mappedBy="serie", orphanRemoval=true, cascade={"remove"})
-     * @Groups({"series:get", "serie:get","seance:get",})
      * @ApiSubresource
      */
     private $exerciceRealises;

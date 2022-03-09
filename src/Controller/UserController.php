@@ -49,29 +49,34 @@ class UserController extends AbstractController
         $user = $this->security->getUser();
         $userRepository = $this->em->getRepository(User::class);
         $marqueRepository = $this->em->getRepository(Marque::class);
-        $marque = $marqueRepository->findOneBy(['id' => $user->getUserMarques()[0]->getMarque()->getId()]);
-        try {
-            $users = $userRepository->findAll();
-            $newUsers = array();
-            foreach ($users as $us) {
-                if($us->getId() != $user->getId())
-                {
-                    $marques = array();
-                    foreach($us->getUserMarques() as $userMarque)
+        if(count( $user->getUserMarques()) != 0)
+        {
+
+            $marque = $marqueRepository->findOneBy(['id' => $user->getUserMarques()[0]->getMarque()->getId()]);
+            try {
+                $users = $userRepository->findAll();
+                $newUsers = array();
+                foreach ($users as $us) {
+                    if($us->getId() != $user->getId())
                     {
-                        array_push($marques ,$userMarque->getMarque());
+                        $marques = array();
+                        foreach($us->getUserMarques() as $userMarque)
+                        {
+                            array_push($marques ,$userMarque->getMarque());
+                        }
+                        if(in_array($marque, $marques))
+                        {
+                            array_push($newUsers, $us);
+                        }
                     }
-                    if(in_array($marque, $marques))
-                    {
-                        array_push($newUsers, $us);
-                    }
-                }
             }
             $response = new Response($serializer->serialize($newUsers, 'json'), 200, ['Content-Type' => 'application/json+ld']);
-        } catch (Exception $e) {
-            $response = new Response("'message : An error occured'", 500, ['Content-Type' => 'application/json+ld']);
-
-        }
+            } catch (Exception $e) {
+                $response = new JsonResponse(['success' => false, 'message' => "Erreur de récupération des utilisateur associé à ce compte"], 500);
+            }  
+        }else{
+            $response = new JsonResponse(['success' => false, 'message' => "Cet utilisateur n'est associé à aucune marque"], 500);
+        }   
         return $response;
     }
 }

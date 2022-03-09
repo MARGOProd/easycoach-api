@@ -14,7 +14,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\ExistsFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Annotation\UserAware;
-use App\Annotation\MarqueAware;
 /**
  * @ApiResource(
  *  normalizationContext={"groups"={"exercices:get"}, "skip_null_values" = false},
@@ -26,7 +25,6 @@ use App\Annotation\MarqueAware;
 *       "post"
 *   }
  * )
- * @MarqueAware(fieldName="marque_id")
  * @UserAware(fieldName="user_id")
  * @ORM\Entity(repositoryClass=ExerciceRepository::class)
  * @ApiFilter(SearchFilter::class, properties={"libelle"="partial"})

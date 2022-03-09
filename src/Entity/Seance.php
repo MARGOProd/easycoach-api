@@ -10,7 +10,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Annotation\UserAware;
-use App\Annotation\MarqueAware;
 /**
  * @ApiResource(
  *  normalizationContext={"groups"={"seances:get"}, "skip_null_values" = false},
@@ -21,7 +20,6 @@ use App\Annotation\MarqueAware;
  *       "put",
  *   }
  * )
- * @MarqueAware(fieldName="marque_id")
  * @UserAware(fieldName="user_id")
  * @ORM\Entity(repositoryClass=SeanceRepository::class)
  */
@@ -56,7 +54,6 @@ class Seance implements OwnerForceInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Serie::class, mappedBy="seance")
-     * @Groups({"client:get", "seance:get"})
      * @ApiSubresource
      */
     private $series;
@@ -64,7 +61,7 @@ class Seance implements OwnerForceInterface
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="seances")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
-     * @Groups({"seance:post", "seance:get", "seances:get", "series:get"})
+     * @Groups({"seance:post"})
      */
     private $user;
 
@@ -83,7 +80,7 @@ class Seance implements OwnerForceInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="seance")
-     * @Groups({"seance:get", "seances:get", "series:get"})
+     * @Groups({"seance:get"})
      * @ApiSubresource
      */
     private $commentaires;
