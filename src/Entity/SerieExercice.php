@@ -85,6 +85,11 @@ class SerieExercice
      */
     private $amplitude;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Tempo::class)
+     */
+    private $tempo;
+
 
     public function getId(): ?int
     {
@@ -195,6 +200,18 @@ class SerieExercice
     public function setAmplitude(?int $amplitude): self
     {
         $this->amplitude = $amplitude;
+
+        return $this;
+    }
+
+    public function getTempo(): ?Tempo
+    {
+        return $this->tempo;
+    }
+
+    public function setTempo(?Tempo $tempo): self
+    {
+        $this->tempo = $tempo;
 
         return $this;
     }
