@@ -102,13 +102,6 @@ class ExerciceRealise
      */
     private $amplitude;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"serie:get", "exerciceRealises:get"})
-     */
-    private $tempo;
-
-
 
     public function __construct()
     {
@@ -344,18 +337,6 @@ class ExerciceRealise
     public function setAmplitude(?int $amplitude): self
     {
         $this->amplitude = $amplitude;
-
-        return $this;
-    }
-
-    public function getTempo(): ?int
-    {
-        return $this->tempo;
-    }
-
-    public function setTempo(?int $tempo): self
-    {
-        $this->tempo = $tempo;
 
         return $this;
     }

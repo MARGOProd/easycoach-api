@@ -85,11 +85,6 @@ class SerieExercice
      */
     private $amplitude;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"seance:get","exerciceRealises:get", "serie_exercices:get"})
-     */
-    private $tempo;
 
     public function getId(): ?int
     {
@@ -200,18 +195,6 @@ class SerieExercice
     public function setAmplitude(?int $amplitude): self
     {
         $this->amplitude = $amplitude;
-
-        return $this;
-    }
-
-    public function getTempo(): ?int
-    {
-        return $this->tempo;
-    }
-
-    public function setTempo(?int $tempo): self
-    {
-        $this->tempo = $tempo;
 
         return $this;
     }

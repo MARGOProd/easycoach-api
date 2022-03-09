@@ -59,7 +59,6 @@ class Serie
     /**
      * @ORM\OneToMany(targetEntity=SerieExercice::class, mappedBy="serie", cascade={"remove"})
      * @ApiSubresource
-     * @Groups({"serie:get"})
      */
     private $serieExercices;
 
