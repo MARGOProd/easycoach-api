@@ -84,6 +84,7 @@ class Serie
 
     /**
      * @ORM\OneToMany(targetEntity=OccurrenceTime::class, mappedBy="serie", orphanRemoval=true)
+     * @ApiSubresource
      */
     private $occurrenceTimes;
 
