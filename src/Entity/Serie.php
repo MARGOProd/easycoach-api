@@ -82,11 +82,17 @@ class Serie
      */
     private $ordre;
 
+    /**
+     * @ORM\OneToMany(targetEntity=OccurrenceTime::class, mappedBy="serie", orphanRemoval=true)
+     */
+    private $occurrenceTimes;
+
     public function __construct()
     {
         $this->serieExercices = new ArrayCollection();
         $this->exerciceRealises = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+        $this->occurrenceTimes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -244,6 +250,36 @@ class Serie
             return false;
         }
 
+    }
+
+    /**
+     * @return Collection|OccurrenceTime[]
+     */
+    public function getOccurrenceTimes(): Collection
+    {
+        return $this->occurrenceTimes;
+    }
+
+    public function addOccurrenceTime(OccurrenceTime $occurrenceTime): self
+    {
+        if (!$this->occurrenceTimes->contains($occurrenceTime)) {
+            $this->occurrenceTimes[] = $occurrenceTime;
+            $occurrenceTime->setSerie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOccurrenceTime(OccurrenceTime $occurrenceTime): self
+    {
+        if ($this->occurrenceTimes->removeElement($occurrenceTime)) {
+            // set the owning side to null (unless already changed)
+            if ($occurrenceTime->getSerie() === $this) {
+                $occurrenceTime->setSerie(null);
+            }
+        }
+
+        return $this;
     }
 
 }
