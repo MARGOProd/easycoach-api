@@ -102,6 +102,11 @@ class ExerciceRealise
      */
     private $amplitude;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $minute;
+
 
     public function __construct()
     {
@@ -337,6 +342,18 @@ class ExerciceRealise
     public function setAmplitude(?int $amplitude): self
     {
         $this->amplitude = $amplitude;
+
+        return $this;
+    }
+
+    public function getMinute(): ?int
+    {
+        return $this->minute;
+    }
+
+    public function setMinute(int $minute): self
+    {
+        $this->minute = $minute;
 
         return $this;
     }

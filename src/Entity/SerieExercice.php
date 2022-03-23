@@ -90,6 +90,11 @@ class SerieExercice
      */
     private $tempo;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $minute;
+
 
     public function getId(): ?int
     {
@@ -212,6 +217,18 @@ class SerieExercice
     public function setTempo(?Tempo $tempo): self
     {
         $this->tempo = $tempo;
+
+        return $this;
+    }
+
+    public function getMinute(): ?int
+    {
+        return $this->minute;
+    }
+
+    public function setMinute(?int $minute): self
+    {
+        $this->minute = $minute;
 
         return $this;
     }
