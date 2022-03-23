@@ -81,17 +81,19 @@ class SerieExercice
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"seance:get","exerciceRealises:get", "serie_exercices:get"})
+     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get"})
      */
     private $amplitude;
 
     /**
      * @ORM\ManyToOne(targetEntity=Tempo::class)
+     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get"})
      */
     private $tempo;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get"})
      */
     private $minute;
 

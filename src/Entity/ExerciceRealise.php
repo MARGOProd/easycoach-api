@@ -104,6 +104,7 @@ class ExerciceRealise
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"serie:get", "exerciceRealises:get"})
      */
     private $minute;
 
