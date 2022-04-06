@@ -90,6 +90,7 @@ class Serie
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get"})
      */
     private $done;
 
