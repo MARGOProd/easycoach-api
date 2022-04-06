@@ -352,7 +352,7 @@ class ExerciceRealise
         return $this->minute;
     }
 
-    public function setMinute(int $minute): self
+    public function setMinute(?int $minute): self
     {
         $this->minute = $minute;
 

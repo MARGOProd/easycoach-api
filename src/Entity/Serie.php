@@ -88,6 +88,11 @@ class Serie
      */
     private $occurrenceTimes;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $done;
+
     public function __construct()
     {
         $this->serieExercices = new ArrayCollection();
@@ -279,6 +284,18 @@ class Serie
                 $occurrenceTime->setSerie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDone(): ?bool
+    {
+        return $this->done;
+    }
+
+    public function setDone(?bool $done): self
+    {
+        $this->done = $done;
 
         return $this;
     }
