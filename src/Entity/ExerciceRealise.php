@@ -103,7 +103,7 @@ class ExerciceRealise
     private $amplitude;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @Groups({"serie:get", "exerciceRealises:get"})
      */
     private $minute;
