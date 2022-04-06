@@ -97,6 +97,11 @@ class SerieExercice
      */
     private $minute;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $done;
+
 
     public function getId(): ?int
     {
@@ -231,6 +236,18 @@ class SerieExercice
     public function setMinute(?int $minute): self
     {
         $this->minute = $minute;
+
+        return $this;
+    }
+
+    public function getDone(): ?bool
+    {
+        return $this->done;
+    }
+
+    public function setDone(?bool $done): self
+    {
+        $this->done = $done;
 
         return $this;
     }
