@@ -70,7 +70,11 @@ class OccurrenceController extends AbstractController
                     }
                 }
             }
-            $response = new Response($serializer->serialize($serieExercices, 'json'), 200, ['Content-Type' => 'application/json+ld']);
+            $rep =[];
+            foreach($serieExercices as &$value){
+                array_push($rep, $value);
+            }
+            $response = new Response($serializer->serialize($rep, 'json'), 200, ['Content-Type' => 'application/json+ld']);
         }else{
             $response = new Response("'message : Serie Id ou Occurrence Id manquante'", 500, ['Content-Type' => 'application/json+ld']);
         }
