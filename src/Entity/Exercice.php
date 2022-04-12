@@ -49,7 +49,6 @@ class Exercice
 
     /**
      * @ORM\OneToMany(targetEntity=ExerciceMuscle::class, mappedBy="exercice")
-     * @Groups({"exercice:get", "serie_exercices:get"})
      */
     private $exerciceMuscles;
 
@@ -192,7 +191,6 @@ class Exercice
     }
 
     /**
-     * @Groups({"seance:get", "serie:get", "exerciceRealises:get", "exercice:get", "exercices:get"})
      */
     public function getMuscles()
     {

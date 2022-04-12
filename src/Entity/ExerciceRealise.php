@@ -86,7 +86,6 @@ class ExerciceRealise
 
     /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="exerciceRealise")
-     * @Groups({"serie:get", "exerciceRealises:get"})
      */
     private $commentaires;
 
