@@ -107,6 +107,11 @@ class ExerciceRealise
      */
     private $minute;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $lap;
+
 
     public function __construct()
     {
@@ -354,6 +359,18 @@ class ExerciceRealise
     public function setMinute(?int $minute): self
     {
         $this->minute = $minute;
+
+        return $this;
+    }
+
+    public function getLap(): ?int
+    {
+        return $this->lap;
+    }
+
+    public function setLap(?int $lap): self
+    {
+        $this->lap = $lap;
 
         return $this;
     }

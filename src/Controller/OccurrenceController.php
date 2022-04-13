@@ -52,13 +52,23 @@ class OccurrenceController extends AbstractController
         $exerciceRealiseRepository = $this->em->getRepository(ExerciceRealise::class);
         if(isset($_GET["serie"]) && isset($_GET["occurrence"]))
         {
-            $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"]]);
+            if(isset($_GET["lap"]) && $_GET["lap"] != null)
+            {
+                $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"], 'lap' => $_GET["lap"]]);
+
+            }else{
+
+                $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"]]);
+            }
             $serieExercices = $serieExerciceRepository->findBy(['serie' => $_GET["serie"]]);
             foreach ($serieExercices as &$value) {
                 $objects = array_filter(
                     $exerciceRealises,
                     function ($e) use (&$value) {
-                        return $e->getSerieExercice()->getId() == $value->getId();
+                        if($e->getSerieExercice() != null)
+                        {
+                            return $e->getSerieExercice()->getId() == $value->getId();
+                        }
                     }
                 );
                 if(!empty($objects))
@@ -93,7 +103,14 @@ class OccurrenceController extends AbstractController
         $exerciceRealiseRepository = $this->em->getRepository(ExerciceRealise::class);
         if(isset($_GET["serie"]) && isset($_GET["occurrence"]))
         {
-            $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"]]);
+            if(isset($_GET["lap"]) && $_GET["lap"] != null)
+            {
+                $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"], 'lap' => $_GET["lap"]]);
+
+            }else{
+
+                $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"]]);
+            }
             $response = new Response($serializer->serialize($exerciceRealises, 'json'), 200, ['Content-Type' => 'application/json+ld']);
         }else{
             $response = new Response("'message : Serie Id ou Occurrence Id manquante'", 500, ['Content-Type' => 'application/json+ld']);
