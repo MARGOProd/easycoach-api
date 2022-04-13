@@ -61,7 +61,9 @@ class SerieController extends AbstractController
                 $this->em->remove($value);
                 $this->em->flush();
             }
-            $response = new JsonResponse(['success' => true, 'message' => ' Serie reset'], 200);
+            // $response = new Response("message :Serie reseted", 204, ['Content-Type' => 'application/json+ld']);
+            $response = new JsonResponse(['success' => true, 'message' => 'Serie reseted'], 204);
+
         }else{
             $response = new Response("'message : Serie Id", 500, ['Content-Type' => 'application/json+ld']);
         }
