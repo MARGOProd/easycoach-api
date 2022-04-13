@@ -86,7 +86,7 @@ class OccurrenceController extends AbstractController
             }
             $response = new Response($serializer->serialize($rep, 'json'), 200, ['Content-Type' => 'application/json+ld']);
         }else{
-            $response = new Response("'message : Serie Id ou Occurrence Id manquante'", 500, ['Content-Type' => 'application/json+ld']);
+            $response = new Response("'message : Serie Id ou Occurrence Id manquant'", 500, ['Content-Type' => 'application/json+ld']);
         }
       
         return $response;
