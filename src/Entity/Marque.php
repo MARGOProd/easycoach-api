@@ -33,11 +33,6 @@ class Marque
     private $clients;
 
     /**
-     * @ORM\OneToMany(targetEntity=Seance::class, mappedBy="marque")
-     */
-    private $seances;
-
-    /**
      * @ORM\OneToMany(targetEntity=Exercice::class, mappedBy="marque")
      */
     private $exercices;
@@ -47,12 +42,17 @@ class Marque
      */
     private $userMarques;
 
+    /**
+     * @ORM\OneToMany(targetEntity=SeanceMarque::class, mappedBy="marque")
+     */
+    private $seanceMarques;
+
     public function __construct()
     {
         $this->clients = new ArrayCollection();
-        $this->seances = new ArrayCollection();
         $this->exercices = new ArrayCollection();
         $this->userMarques = new ArrayCollection();
+        $this->seanceMarques = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -96,36 +96,6 @@ class Marque
             // set the owning side to null (unless already changed)
             if ($client->getMarque() === $this) {
                 $client->setMarque(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Seance[]
-     */
-    public function getSeances(): Collection
-    {
-        return $this->seances;
-    }
-
-    public function addSeance(Seance $seance): self
-    {
-        if (!$this->seances->contains($seance)) {
-            $this->seances[] = $seance;
-            $seance->setMarque($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSeance(Seance $seance): self
-    {
-        if ($this->seances->removeElement($seance)) {
-            // set the owning side to null (unless already changed)
-            if ($seance->getMarque() === $this) {
-                $seance->setMarque(null);
             }
         }
 
@@ -186,6 +156,36 @@ class Marque
             // set the owning side to null (unless already changed)
             if ($userMarque->getMarque() === $this) {
                 $userMarque->setMarque(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SeanceMarque[]
+     */
+    public function getSeanceMarques(): Collection
+    {
+        return $this->seanceMarques;
+    }
+
+    public function addSeanceMarque(SeanceMarque $seanceMarque): self
+    {
+        if (!$this->seanceMarques->contains($seanceMarque)) {
+            $this->seanceMarques[] = $seanceMarque;
+            $seanceMarque->setMarque($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeanceMarque(SeanceMarque $seanceMarque): self
+    {
+        if ($this->seanceMarques->removeElement($seanceMarque)) {
+            // set the owning side to null (unless already changed)
+            if ($seanceMarque->getMarque() === $this) {
+                $seanceMarque->setMarque(null);
             }
         }
 

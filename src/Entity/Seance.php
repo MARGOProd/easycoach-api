@@ -60,13 +60,6 @@ class Seance implements OwnerForceInterface
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Marque::class, inversedBy="seances")
-     * @ORM\JoinColumn(name="marque_id", referencedColumnName="id", nullable=true)
-     * @Groups({"seance:post", "seance:get"})
-     */
-    private $marque;
-
-    /**
      * @ORM\Column(type="integer")
      * @Groups({"seance:post", "seance:get", "seances:get", "client:get", "serie:get", "series:get"})
      */
@@ -84,11 +77,17 @@ class Seance implements OwnerForceInterface
      */
     private $seanceSeries;
 
+    /**
+     * @ORM\OneToMany(targetEntity=SeanceMarque::class, mappedBy="seance")
+     */
+    private $seanceMarques;
+
 
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
         $this->seanceSeries = new ArrayCollection();
+        $this->seanceMarques = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,18 +139,6 @@ class Seance implements OwnerForceInterface
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    public function getMarque(): ?Marque
-    {
-        return $this->marque;
-    }
-
-    public function setMarque(?Marque $marque): self
-    {
-        $this->marque = $marque;
 
         return $this;
     }
@@ -321,6 +308,36 @@ class Seance implements OwnerForceInterface
             // set the owning side to null (unless already changed)
             if ($seanceSeries->getSeance() === $this) {
                 $seanceSeries->setSeance(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SeanceMarque[]
+     */
+    public function getSeanceMarques(): Collection
+    {
+        return $this->seanceMarques;
+    }
+
+    public function addSeanceMarque(SeanceMarque $seanceMarque): self
+    {
+        if (!$this->seanceMarques->contains($seanceMarque)) {
+            $this->seanceMarques[] = $seanceMarque;
+            $seanceMarque->setSeance($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeanceMarque(SeanceMarque $seanceMarque): self
+    {
+        if ($this->seanceMarques->removeElement($seanceMarque)) {
+            // set the owning side to null (unless already changed)
+            if ($seanceMarque->getSeance() === $this) {
+                $seanceMarque->setSeance(null);
             }
         }
 
