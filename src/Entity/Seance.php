@@ -53,12 +53,6 @@ class Seance implements OwnerForceInterface
     private $libelle;
 
     /**
-     * @ORM\OneToMany(targetEntity=Serie::class, mappedBy="seance")
-     * @ApiSubresource
-     */
-    private $series;
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="seances")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      * @Groups({"seance:post"})
@@ -85,10 +79,16 @@ class Seance implements OwnerForceInterface
      */
     private $commentaires;
 
+    /**
+     * @ORM\OneToMany(targetEntity=SeanceSerie::class, mappedBy="seance")
+     */
+    private $seanceSeries;
+
+
     public function __construct()
     {
-        $this->series = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+        $this->seanceSeries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,36 +131,6 @@ class Seance implements OwnerForceInterface
 
         return $this;
     }
-
-    /**
-     * @return Collection|Serie[]
-     */
-    public function getSeries(): Collection
-    {
-        return $this->series;
-    }
-
-    // public function addSeries(Serie $series): self
-    // {
-    //     if (!$this->series->contains($series)) {
-    //         $this->series[] = $series;
-    //         $series->setSeance($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeSeries(Serie $series): self
-    // {
-    //     if ($this->series->removeElement($series)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($series->getSeance() === $this) {
-    //             $series->setSeance(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
 
     public function getUser(): ?User
     {
@@ -228,103 +198,133 @@ class Seance implements OwnerForceInterface
         return $this;
     }
 
+    // /**
+    //  * TODO A REFAIRE
+    //  */
+    // public function getRepetitionExercice()
+    // {
+    //     $series = $this->getSeries();
+    //     $exerciceRepetitions = array();
+    //     if(!$series->isEmpty())
+    //     {
+    //         foreach($series as $serie)
+    //         {
+    //             if(!$serie->getExerciceRealises()->isEmpty())
+    //             {
+    //                 $exercicesRealises = $serie->getExerciceRealises();
+    //                 foreach($exercicesRealises as $exercicesRealise )
+    //                 {
+
+    //                     if($exercicesRealise->getRepetition() != null)
+    //                     {
+    //                         if(isset($exerciceRepetitions[$exercicesRealise->getExercice()->getLibelle()]))
+    //                         {
+    //                             $exerciceRepetitions[$exercicesRealise->getExercice()->getLibelle()]['fait'] += $exercicesRealise->getRepetition();
+    //                         }else{
+    //                             $exerciceRepetitions += [$exercicesRealise->getExercice()->getLibelle() => ['fait' => $exercicesRealise->getRepetition()]];
+    //                         }
+    //                     }
+    //                     if($exercicesRealise->getSerieExercice() != null && count($exercicesRealise->getSerieExercice())>0 )
+    //                     {
+    //                         $serieExercice = $exercicesRealise->getSerieExercice();
+    //                         if(isset($exerciceRepetitions[$serieExercice->getExercice()->getLibelle()]))
+    //                         {
+    //                             $exerciceRepetitions[$serieExercice->getExercice()->getLibelle()]+= ['prevu' => $serieExercice->getRepetition()* $serie->getFrequence()->getSets()];
+    //                         }else{
+    //                             $exerciceRepetitions += [$serieExercice->getExercice()->getLibelle() => ['prevu' => $serieExercice->getRepetition() * $serie->getFrequence()->getSets()]];
+    //                         }
+    //                     } 
+    //                 }
+    //             }
+    //             if(!$serie->getSerieExercices()->isEmpty())
+    //             {
+    //                 $exerciceSeriePrevu = $serie->getSerieExercices();
+    //                 if(!empty($exerciceRepetitions))
+    //                 {
+    //                     foreach($exerciceSeriePrevu as $exerciceSeriePrevu)
+    //                     {
+    //                         if(!isset($exerciceRepetitions[$exerciceSeriePrevu->getExercice()->getLibelle()]))
+    //                         {
+    //                             $exerciceRepetitions += [$exerciceSeriePrevu->getExercice()->getLibelle() => ['fait' => 0 , 'prevu' => $serieExercice->getRepetition()]];
+    //                         }
+    //                     }
+    //                 }
+
+    //             }
+    //         }
+    //     }
+    //     return $exerciceRepetitions;
+    // }
+
+    // /**
+    //  * @Groups({"seance:get", "seances:get"})
+    //  */
+    // public function getPoidsTotal()
+    // {
+    //     $poids = 0;
+    //     if(!empty($this->getExerciceRealise()))
+    //     {
+    //         $exerciceRealises = $this->getExerciceRealise();
+    //         foreach($exerciceRealises as $exerciceRealise)
+    //         {
+    //             if($exerciceRealise->getPoids() != 0 && $exerciceRealise->getPoids() != null)
+    //             {
+    //                 $poids += $exerciceRealise->getPoids() * $exerciceRealise->getRepetition();
+    //             }
+    //         }
+    //     }
+    //     return $poids;
+    // }
+
+    // public function getExerciceRealise()
+    // {
+    //     $poids = 0;
+    //     $series = $this->getSeries();
+    //     $exerciceRealises =array();
+    //     if(!$series->isEmpty())
+    //     {
+    //         foreach($series as $serie)
+    //         {
+    //             if(!$serie->getExerciceRealises()->isEmpty())
+    //             {
+    //                 foreach($serie->getExerciceRealises() as $exercicesRealise )
+    //                 {
+    //                     array_push($exerciceRealises, $exercicesRealise);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return $exerciceRealises;
+    // }
+
     /**
-     * TODO A REFAIRE
+     * @return Collection|SeanceSerie[]
      */
-    public function getRepetitionExercice()
+    public function getSeanceSeries(): Collection
     {
-        $series = $this->getSeries();
-        $exerciceRepetitions = array();
-        if(!$series->isEmpty())
-        {
-            foreach($series as $serie)
-            {
-                if(!$serie->getExerciceRealises()->isEmpty())
-                {
-                    $exercicesRealises = $serie->getExerciceRealises();
-                    foreach($exercicesRealises as $exercicesRealise )
-                    {
-
-                        if($exercicesRealise->getRepetition() != null)
-                        {
-                            if(isset($exerciceRepetitions[$exercicesRealise->getExercice()->getLibelle()]))
-                            {
-                                $exerciceRepetitions[$exercicesRealise->getExercice()->getLibelle()]['fait'] += $exercicesRealise->getRepetition();
-                            }else{
-                                $exerciceRepetitions += [$exercicesRealise->getExercice()->getLibelle() => ['fait' => $exercicesRealise->getRepetition()]];
-                            }
-                        }
-                        if($exercicesRealise->getSerieExercice() != null && count($exercicesRealise->getSerieExercice())>0 )
-                        {
-                            $serieExercice = $exercicesRealise->getSerieExercice();
-                            if(isset($exerciceRepetitions[$serieExercice->getExercice()->getLibelle()]))
-                            {
-                                $exerciceRepetitions[$serieExercice->getExercice()->getLibelle()]+= ['prevu' => $serieExercice->getRepetition()* $serie->getFrequence()->getSets()];
-                            }else{
-                                $exerciceRepetitions += [$serieExercice->getExercice()->getLibelle() => ['prevu' => $serieExercice->getRepetition() * $serie->getFrequence()->getSets()]];
-                            }
-                        } 
-                    }
-                }
-                if(!$serie->getSerieExercices()->isEmpty())
-                {
-                    $exerciceSeriePrevu = $serie->getSerieExercices();
-                    if(!empty($exerciceRepetitions))
-                    {
-                        foreach($exerciceSeriePrevu as $exerciceSeriePrevu)
-                        {
-                            if(!isset($exerciceRepetitions[$exerciceSeriePrevu->getExercice()->getLibelle()]))
-                            {
-                                $exerciceRepetitions += [$exerciceSeriePrevu->getExercice()->getLibelle() => ['fait' => 0 , 'prevu' => $serieExercice->getRepetition()]];
-                            }
-                        }
-                    }
-
-                }
-            }
-        }
-        return $exerciceRepetitions;
+        return $this->seanceSeries;
     }
 
-    /**
-     * @Groups({"seance:get", "seances:get"})
-     */
-    public function getPoidsTotal()
+    public function addSeanceSeries(SeanceSerie $seanceSeries): self
     {
-        $poids = 0;
-        if(!empty($this->getExerciceRealise()))
-        {
-            $exerciceRealises = $this->getExerciceRealise();
-            foreach($exerciceRealises as $exerciceRealise)
-            {
-                if($exerciceRealise->getPoids() != 0 && $exerciceRealise->getPoids() != null)
-                {
-                    $poids += $exerciceRealise->getPoids() * $exerciceRealise->getRepetition();
-                }
-            }
+        if (!$this->seanceSeries->contains($seanceSeries)) {
+            $this->seanceSeries[] = $seanceSeries;
+            $seanceSeries->setSeance($this);
         }
-        return $poids;
+
+        return $this;
     }
 
-    public function getExerciceRealise()
+    public function removeSeanceSeries(SeanceSerie $seanceSeries): self
     {
-        $poids = 0;
-        $series = $this->getSeries();
-        $exerciceRealises =array();
-        if(!$series->isEmpty())
-        {
-            foreach($series as $serie)
-            {
-                if(!$serie->getExerciceRealises()->isEmpty())
-                {
-                    foreach($serie->getExerciceRealises() as $exercicesRealise )
-                    {
-                        array_push($exerciceRealises, $exercicesRealise);
-                    }
-                }
+        if ($this->seanceSeries->removeElement($seanceSeries)) {
+            // set the owning side to null (unless already changed)
+            if ($seanceSeries->getSeance() === $this) {
+                $seanceSeries->setSeance(null);
             }
         }
-        return $exerciceRealises;
+
+        return $this;
     }
 
 }

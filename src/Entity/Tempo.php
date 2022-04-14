@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\TempoRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,21 +17,25 @@ class Tempo
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get"})
      */
     private $descente;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get"})
      */
     private $static;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get"})
      */
     private $montee;
 

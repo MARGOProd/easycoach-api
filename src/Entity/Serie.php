@@ -38,10 +38,7 @@ class Serie
      */
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Seance::class, inversedBy="series")
-     */
-    private $seance;
+
 
     /**
      * @ORM\Column(type="integer")
@@ -94,29 +91,24 @@ class Serie
      */
     private $done;
 
+    /**
+     * @ORM\OneToMany(targetEntity=SeanceSerie::class, mappedBy="serie")
+     */
+    private $seanceSeries;
+
+
     public function __construct()
     {
         $this->serieExercices = new ArrayCollection();
         $this->exerciceRealises = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
         $this->occurrenceTimes = new ArrayCollection();
+        $this->seanceSeries = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getSeance(): ?Seance
-    {
-        return $this->seance;
-    }
-
-    public function setSeance(?Seance $seance): self
-    {
-        $this->seance = $seance;
-
-        return $this;
     }
 
     public function getType(): ?int
@@ -297,6 +289,36 @@ class Serie
     public function setDone(?bool $done): self
     {
         $this->done = $done;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SeanceSerie[]
+     */
+    public function getSeanceSeries(): Collection
+    {
+        return $this->seanceSeries;
+    }
+
+    public function addSeanceSeries(SeanceSerie $seanceSeries): self
+    {
+        if (!$this->seanceSeries->contains($seanceSeries)) {
+            $this->seanceSeries[] = $seanceSeries;
+            $seanceSeries->setSerie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeanceSeries(SeanceSerie $seanceSeries): self
+    {
+        if ($this->seanceSeries->removeElement($seanceSeries)) {
+            // set the owning side to null (unless already changed)
+            if ($seanceSeries->getSerie() === $this) {
+                $seanceSeries->setSerie(null);
+            }
+        }
 
         return $this;
     }

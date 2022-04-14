@@ -69,7 +69,12 @@ class OccurrenceController extends AbstractController
                     $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"]]);
                 }
             }
-            $serieExercices = $serieExerciceRepository->findBy(['serie' => $_GET["serie"]]);
+            if(isset($_GET["minute"]) && $_GET["minute"] != null)
+                {
+                    $serieExercices = $serieExerciceRepository->findBy(['serie' => $_GET["serie"], 'minute' => $_GET["minute"]]);
+                }else{
+                    $serieExercices = $serieExerciceRepository->findBy(['serie' => $_GET["serie"]]);
+                }
             foreach ($serieExercices as &$value) {
                 $objects = array_filter(
                     $exerciceRealises,
