@@ -33,12 +33,12 @@ class Seance implements OwnerForceInterface
      */
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="seance")
-     * @ORM\JoinColumn(name="client_id", referencedColumnName="id", nullable=true)
-     * @Groups({"seance:post", "seance:get", "seances:get", "series:get"})
-     */
-    private $client;
+    // /**
+    //  * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="seance")
+    //  * @ORM\JoinColumn(name="client_id", referencedColumnName="id", nullable=true)
+    //  * @Groups({"seance:post", "seance:get", "seances:get", "series:get"})
+    //  */
+    // private $client;
 
     /**
      * @ORM\Column(type="string",)
@@ -95,17 +95,17 @@ class Seance implements OwnerForceInterface
         return $this->id;
     }
 
-    public function getClient(): ?Client
-    {
-        return $this->client;
-    }
+    // public function getClient(): ?Client
+    // {
+    //     return $this->client;
+    // }
 
-    public function setClient(?Client $client): self
-    {
-        $this->client = $client;
+    // public function setClient(?Client $client): self
+    // {
+    //     $this->client = $client;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getDebut(): ?string
     {

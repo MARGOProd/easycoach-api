@@ -145,35 +145,35 @@ class Client implements OwnerForceInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Seance[]
-     */
-    public function getSeance(): Collection
-    {
-        return $this->seance;
-    }
+    // /**
+    //  * @return Collection|Seance[]
+    //  */
+    // public function getSeance(): Collection
+    // {
+    //     return $this->seance;
+    // }
 
-    public function addSeance(Seance $seance): self
-    {
-        if (!$this->seance->contains($seance)) {
-            $this->seance[] = $seance;
-            $seance->setClient($this);
-        }
+    // public function addSeance(Seance $seance): self
+    // {
+    //     if (!$this->seance->contains($seance)) {
+    //         $this->seance[] = $seance;
+    //         $seance->setClient($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeSeance(Seance $seance): self
-    {
-        if ($this->seance->removeElement($seance)) {
-            // set the owning side to null (unless already changed)
-            if ($seance->getClient() === $this) {
-                $seance->setClient(null);
-            }
-        }
+    // public function removeSeance(Seance $seance): self
+    // {
+    //     if ($this->seance->removeElement($seance)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($seance->getClient() === $this) {
+    //             $seance->setClient(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getUser(): ?User
     {
