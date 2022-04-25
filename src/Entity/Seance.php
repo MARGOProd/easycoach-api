@@ -73,7 +73,7 @@ class Seance implements OwnerForceInterface
     private $commentaires;
 
     /**
-     * @ORM\OneToMany(targetEntity=SeanceSerie::class, mappedBy="seance")
+     * @ORM\OneToMany(targetEntity=SeanceSerie::class, mappedBy="seance", cascade={"remove"})
      * @ApiSubresource
      */
     private $seanceSeries;

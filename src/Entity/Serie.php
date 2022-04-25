@@ -92,7 +92,7 @@ class Serie
     private $done;
 
     /**
-     * @ORM\OneToMany(targetEntity=SeanceSerie::class, mappedBy="serie")
+     * @ORM\OneToMany(targetEntity=SeanceSerie::class, mappedBy="serie", cascade={"remove"})
      */
     private $seanceSeries;
 
