@@ -112,6 +112,12 @@ class ExerciceRealise
      */
     private $lap;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="exerciceRealises")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
 
     public function __construct()
     {
@@ -371,6 +377,18 @@ class ExerciceRealise
     public function setLap(?int $lap): self
     {
         $this->lap = $lap;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
