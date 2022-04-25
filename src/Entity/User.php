@@ -99,6 +99,11 @@ class User implements UserInterface
      */
     private $userMarques;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ExerciceRealise::class, mappedBy="user")
+     */
+    private $exerciceRealises;
+
 
     public function __construct()
     {
@@ -109,6 +114,7 @@ class User implements UserInterface
         $this->exercices = new ArrayCollection();
         $this->userExercices = new ArrayCollection();
         $this->userMarques = new ArrayCollection();
+        $this->exerciceRealises = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -432,6 +438,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($userMarque->getUser() === $this) {
                 $userMarque->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ExerciceRealise[]
+     */
+    public function getExerciceRealises(): Collection
+    {
+        return $this->exerciceRealises;
+    }
+
+    public function addExerciceRealise(ExerciceRealise $exerciceRealise): self
+    {
+        if (!$this->exerciceRealises->contains($exerciceRealise)) {
+            $this->exerciceRealises[] = $exerciceRealise;
+            $exerciceRealise->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExerciceRealise(ExerciceRealise $exerciceRealise): self
+    {
+        if ($this->exerciceRealises->removeElement($exerciceRealise)) {
+            // set the owning side to null (unless already changed)
+            if ($exerciceRealise->getUser() === $this) {
+                $exerciceRealise->setUser(null);
             }
         }
 
