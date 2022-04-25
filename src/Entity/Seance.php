@@ -29,7 +29,7 @@ class Seance implements OwnerForceInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"seance:post", "seance:get", "seances:get", "client:get", "serie:get", "series:get"})
+     * @Groups({"seance:post", "seance:get", "seances:get", "client:get", "serie:get", "series:get", "seanceSeries:get"})
      */
     private $id;
 
@@ -42,13 +42,13 @@ class Seance implements OwnerForceInterface
 
     /**
      * @ORM\Column(type="string",)
-     * @Groups({"seance:post", "seance:get", "seances:get", "client:get", "serie:get", "series:get"})
+     * @Groups({"seance:post", "seance:get", "seances:get", "client:get", "serie:get", "series:get", "seanceSeries:get"})
      */
     private $debut;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"seance:post","seance:get", "seances:get", "client:get", "serie:get", "series:get"})
+     * @Groups({"seance:post","seance:get", "seances:get", "client:get", "serie:get", "series:get", "seanceSeries:get"})
      */
     private $libelle;
 
@@ -74,11 +74,13 @@ class Seance implements OwnerForceInterface
 
     /**
      * @ORM\OneToMany(targetEntity=SeanceSerie::class, mappedBy="seance")
+     * @ApiSubresource
      */
     private $seanceSeries;
 
     /**
      * @ORM\OneToMany(targetEntity=SeanceMarque::class, mappedBy="seance")
+     * @ApiSubresource
      */
     private $seanceMarques;
 

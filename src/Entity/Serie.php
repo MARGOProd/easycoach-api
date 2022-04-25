@@ -34,7 +34,7 @@ class Serie
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get"})
+     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get", "seanceSeries:get"})
      */
     private $id;
 
@@ -42,14 +42,14 @@ class Serie
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get"})
+     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get", "seanceSeries:get"})
      */
     private $type;
 
     /**
      * @ORM\OneToOne(targetEntity=Frequence::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"serie:get", "series:get"})
+     * @Groups({"serie:get", "series:get", "seanceSeries:get"})
      */
     private $frequence;
 
@@ -74,7 +74,7 @@ class Serie
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get"})
+     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get", "seanceSeries:get"})
      * 
      */
     private $ordre;
@@ -87,7 +87,7 @@ class Serie
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
-     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get"})
+     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get", "seanceSeries:get"})
      */
     private $done;
 
