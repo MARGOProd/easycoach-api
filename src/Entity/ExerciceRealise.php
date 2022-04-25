@@ -26,6 +26,7 @@ class ExerciceRealise
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"exerciceRealises:get"})
+     * @UserAware(fieldName="user_id")
      */
     private $id;
 
