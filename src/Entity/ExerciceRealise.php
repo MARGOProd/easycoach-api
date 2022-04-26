@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use App\Annotation\UserAware;
 
 
 /**
@@ -18,6 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * )
  * @ORM\Entity(repositoryClass=ExerciceRealiseRepository::class)
  * @ApiFilter(SearchFilter::class, properties={"occurrence"="exact"})
+ * @UserAware(fieldName="user_id")
  */
 class ExerciceRealise
 {
@@ -26,7 +28,6 @@ class ExerciceRealise
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"exerciceRealises:get"})
-     * @UserAware(fieldName="user_id")
      */
     private $id;
 

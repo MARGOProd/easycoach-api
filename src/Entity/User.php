@@ -12,7 +12,6 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
-use App\Annotation\UserAware;
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass=UserRepository::class)
