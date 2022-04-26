@@ -22,7 +22,6 @@ use App\Annotation\UserAware;
  *     message="This email already exists."
  * )
  * @ApiFilter(OrderFilter::class, properties={"id", "prenom" : "DESC", "nom"}, arguments={"orderParameterName"="order"})
- * @UserAware(fieldName="id")
 */
 class User implements UserInterface
 {

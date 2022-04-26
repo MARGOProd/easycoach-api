@@ -13,7 +13,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *  normalizationContext={"groups"={"userMarques:get"}, "skip_null_values" = false},
  * )
  * @ORM\Entity(repositoryClass=UserMarqueRepository::class)
- * @UserAware(fieldName="user_id")
  */
 class UserMarque
 {
