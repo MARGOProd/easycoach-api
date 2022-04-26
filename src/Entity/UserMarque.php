@@ -5,10 +5,13 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserMarqueRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  normalizationContext={"groups"={"userMarques:get"}, "skip_null_values" = false},
+ * )
  * @ORM\Entity(repositoryClass=UserMarqueRepository::class)
  * @UserAware(fieldName="user_id")
  */
@@ -18,18 +21,21 @@ class UserMarque
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"userMarques:get"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="userMarques")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"userMarques:get"})
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Marque::class, inversedBy="userMarques")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"userMarques:get"})
      */
     private $Marque;
 

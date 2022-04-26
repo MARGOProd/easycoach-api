@@ -30,25 +30,25 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"device:get"})
+     * @Groups({"device:get", "userMarques:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=150)
-     * @Groups({"device:get"})
+     * @Groups({"device:get", "userMarques:get"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=150, nullable=true)
-     * @Groups({"device:get"})
+     * @Groups({"device:get", "userMarques:get"})
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255,  unique=true)
-     * @Groups({"device:get"})
+     * @Groups({"device:get", "userMarques:get"})
      */
     private $email;
 
@@ -59,7 +59,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"device:get"})
+     * @Groups({"device:get", "userMarques:get"})
      */
     private $roles = [];
 
