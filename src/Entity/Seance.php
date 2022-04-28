@@ -60,12 +60,6 @@ class Seance implements OwnerForceInterface
     private $user;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Groups({"seance:post", "seance:get", "seances:get", "client:get", "serie:get", "series:get"})
-     */
-    private $type;
-
-    /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="seance")
      * @Groups({"seance:get"})
      * @ApiSubresource
@@ -83,6 +77,13 @@ class Seance implements OwnerForceInterface
      * @ApiSubresource
      */
     private $seanceMarques;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=SeanceCategorie::class, inversedBy="seances")
+     * @Groups({"seances:get", "seance:get"})
+     * @ApiSubresource
+     */
+    private $seanceCategorie;
 
 
     public function __construct()
@@ -141,18 +142,6 @@ class Seance implements OwnerForceInterface
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    public function getType(): ?int
-    {
-        return $this->type;
-    }
-
-    public function setType(int $type): self
-    {
-        $this->type = $type;
 
         return $this;
     }
@@ -342,6 +331,18 @@ class Seance implements OwnerForceInterface
                 $seanceMarque->setSeance(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSeanceCategorie(): ?SeanceCategorie
+    {
+        return $this->seanceCategorie;
+    }
+
+    public function setSeanceCategorie(?SeanceCategorie $seanceCategorie): self
+    {
+        $this->seanceCategorie = $seanceCategorie;
 
         return $this;
     }

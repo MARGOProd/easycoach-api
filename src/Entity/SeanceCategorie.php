@@ -37,9 +37,15 @@ class SeanceCategorie
      */
     private $libelle;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Seance::class, mappedBy="seanceCategorie")
+     */
+    private $seances;
+
     public function __construct()
     {
         $this->seanceCategories = new ArrayCollection();
+        $this->seances = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,6 +103,36 @@ class SeanceCategorie
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Seance[]
+     */
+    public function getSeances(): Collection
+    {
+        return $this->seances;
+    }
+
+    public function addSeance(Seance $seance): self
+    {
+        if (!$this->seances->contains($seance)) {
+            $this->seances[] = $seance;
+            $seance->setSeanceCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeance(Seance $seance): self
+    {
+        if ($this->seances->removeElement($seance)) {
+            // set the owning side to null (unless already changed)
+            if ($seance->getSeanceCategorie() === $this) {
+                $seance->setSeanceCategorie(null);
+            }
+        }
 
         return $this;
     }

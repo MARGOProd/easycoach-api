@@ -120,6 +120,11 @@ class ExerciceRealise
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $session;
+
 
     public function __construct()
     {
@@ -391,6 +396,18 @@ class ExerciceRealise
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getSession(): ?int
+    {
+        return $this->session;
+    }
+
+    public function setSession(int $session): self
+    {
+        $this->session = $session;
 
         return $this;
     }

@@ -258,6 +258,23 @@ class Serie
     }
 
     /**
+     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get"})
+     */
+    public function getNbSession()
+    {
+        $nb = 0;
+        foreach($this->getExerciceRealises() as $exerciceRealise)
+        {
+            if($nb < $exerciceRealise->getSession())
+            {
+                $nb = $exerciceRealise->getSession();
+            }
+        }
+        return $nb;
+
+    }
+
+    /**
      * @return Collection|OccurrenceTime[]
      */
     public function getOccurrenceTimes(): Collection
