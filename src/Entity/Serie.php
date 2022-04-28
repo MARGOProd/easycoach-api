@@ -98,6 +98,7 @@ class Serie
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get", "seanceSeries:get"})
      */
     private $libelle;
 
