@@ -20,7 +20,6 @@ use App\Annotation\UserAware;
  *       "put",
  *   }
  * )
- * @UserAware(fieldName="user_id")
  * @ORM\Entity(repositoryClass=SeanceRepository::class)
  */
 class Seance implements OwnerForceInterface
@@ -87,8 +86,14 @@ class Seance implements OwnerForceInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"seances:get", "seance:get"})
      */
     private $image;
+
+    /**
+     * @ORM\OneToMany(targetEntity=SeanceUser::class, mappedBy="seance")
+     */
+    private $seanceUsers;
 
 
     public function __construct()
@@ -96,6 +101,7 @@ class Seance implements OwnerForceInterface
         $this->commentaires = new ArrayCollection();
         $this->seanceSeries = new ArrayCollection();
         $this->seanceMarques = new ArrayCollection();
+        $this->seanceUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -362,6 +368,44 @@ class Seance implements OwnerForceInterface
         $this->image = $image;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|SeanceUser[]
+     */
+    public function getSeanceUsers(): Collection
+    {
+        return $this->seanceUsers;
+    }
+
+    public function addSeanceUser(SeanceUser $seanceUser): self
+    {
+        if (!$this->seanceUsers->contains($seanceUser)) {
+            $this->seanceUsers[] = $seanceUser;
+            $seanceUser->setSeance($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeanceUser(SeanceUser $seanceUser): self
+    {
+        if ($this->seanceUsers->removeElement($seanceUser)) {
+            // set the owning side to null (unless already changed)
+            if ($seanceUser->getSeance() === $this) {
+                $seanceUser->setSeance(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @Groups({"seances:get", "seance:get"})
+     */
+    public function getnbSession()
+    {
+        return count($this->getSeanceUsers());
     }
 
 }

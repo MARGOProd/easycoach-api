@@ -11,6 +11,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\ExistsFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 
 /**
  * @ApiResource(
@@ -50,11 +51,13 @@ class SeanceCategorie
 
     /**
      * @ORM\OneToMany(targetEntity=Seance::class, mappedBy="seanceCategorie")
+     * @ApiSubresource
      */
     private $seances;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"seance:get", "seances:get", "seanceCategories:get"})
      */
     private $image;
 
@@ -163,5 +166,19 @@ class SeanceCategorie
         $this->image = $image;
 
         return $this;
+    }
+/**
+    * @Groups({"seance:get", "seances:get", "seanceCategories:get"})
+*/
+    public function getNbSousCategories(): ?int
+    {
+        return count($this->getSeanceCategories());
+    }
+/**
+    * @Groups({"seance:get", "seances:get", "seanceCategories:get"})
+*/
+    public function getNbSeances(): ?int
+    {
+        return count($this->getSeances());
     }
 }
