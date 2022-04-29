@@ -7,10 +7,18 @@ use App\Repository\SeanceCategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\ExistsFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  normalizationContext={"groups"={"seanceCategories:get"}, "skip_null_values" = false},
+ * )
  * @ORM\Entity(repositoryClass=SeanceCategorieRepository::class)
+ * @ApiFilter(ExistsFilter::class, properties={"parent"})
+ * @ApiFilter(SearchFilter::class, properties={"parent"="exact"})
  */
 class SeanceCategorie
 {
@@ -18,12 +26,14 @@ class SeanceCategorie
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"seance:get", "seances:get", "seanceCategories:get"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=SeanceCategorie::class, inversedBy="seanceCategories")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
+     * @Groups({"seance:get", "seances:get", "seanceCategories:get"})
      */
     private $parent;
 
@@ -34,6 +44,7 @@ class SeanceCategorie
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"seance:get", "seances:get", "seanceCategories:get"})
      */
     private $libelle;
 
@@ -41,6 +52,11 @@ class SeanceCategorie
      * @ORM\OneToMany(targetEntity=Seance::class, mappedBy="seanceCategorie")
      */
     private $seances;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $image;
 
     public function __construct()
     {
@@ -133,6 +149,18 @@ class SeanceCategorie
                 $seance->setSeanceCategorie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

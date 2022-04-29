@@ -85,6 +85,11 @@ class Seance implements OwnerForceInterface
      */
     private $seanceCategorie;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $image;
+
 
     public function __construct()
     {
@@ -343,6 +348,18 @@ class Seance implements OwnerForceInterface
     public function setSeanceCategorie(?SeanceCategorie $seanceCategorie): self
     {
         $this->seanceCategorie = $seanceCategorie;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
