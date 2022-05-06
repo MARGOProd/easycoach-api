@@ -18,7 +18,7 @@ use App\Annotation\UserAware;
  *  normalizationContext={"groups"={"exerciceRealises:get"}, "skip_null_values" = false},
  * )
  * @ORM\Entity(repositoryClass=ExerciceRealiseRepository::class)
- * @ApiFilter(SearchFilter::class, properties={"occurrence"="exact"})
+ * @ApiFilter(SearchFilter::class, properties={"occurrence"="exact", "serie.id"="exact", "seanceUser.id"="exact"})
  * @UserAware(fieldName="user_id")
  */
 class ExerciceRealise
@@ -119,11 +119,10 @@ class ExerciceRealise
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
-
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=SeanceUser::class, inversedBy="exerciceRealises")
      */
-    private $session;
+    private $seanceUser;
 
 
     public function __construct()
@@ -400,14 +399,14 @@ class ExerciceRealise
         return $this;
     }
 
-    public function getSession(): ?int
+    public function getSeanceUser(): ?SeanceUser
     {
-        return $this->session;
+        return $this->seanceUser;
     }
 
-    public function setSession(int $session): self
+    public function setSeanceUser(?SeanceUser $seanceUser): self
     {
-        $this->session = $session;
+        $this->seanceUser = $seanceUser;
 
         return $this;
     }

@@ -244,7 +244,7 @@ class Serie
     }
 
     /**
-     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get"})
+     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get", "seanceSeries:get"})
      */
     public function getVerouillee()
     {
@@ -258,19 +258,11 @@ class Serie
     }
 
     /**
-     * @Groups({"serie:get", "series:get", "seance:get","serie_exercices:get"})
+     * @Groups({"serie:get", "series:get", "seance:get", "serie_exercices:get", "seanceSeries:get"})
      */
-    public function getNbSession()
+    public function getNbSerieExercices()
     {
-        $nb = 0;
-        foreach($this->getExerciceRealises() as $exerciceRealise)
-        {
-            if($nb < $exerciceRealise->getSession())
-            {
-                $nb = $exerciceRealise->getSession();
-            }
-        }
-        return $nb;
+        return count($this->getSerieExercices());
 
     }
 

@@ -18,8 +18,8 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
  *  normalizationContext={"groups"={"seanceCategories:get"}, "skip_null_values" = false},
  * )
  * @ORM\Entity(repositoryClass=SeanceCategorieRepository::class)
- * @ApiFilter(ExistsFilter::class, properties={"parent"})
  * @ApiFilter(SearchFilter::class, properties={"parent"="exact"})
+ * @ApiFilter(ExistsFilter::class, properties={"parent"})
  */
 class SeanceCategorie
 {
@@ -27,7 +27,7 @@ class SeanceCategorie
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get", "seances:get", "seanceCategories:get"})
+     * @Groups({"seance:get", "seances:get", "seanceCategories:get", "seanceUsers:get"})
      */
     private $id;
 
@@ -45,7 +45,7 @@ class SeanceCategorie
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"seance:get", "seances:get", "seanceCategories:get"})
+     * @Groups({"seance:get", "seances:get", "seanceCategories:get", "seanceUsers:get"})
      */
     private $libelle;
 
@@ -57,7 +57,7 @@ class SeanceCategorie
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"seance:get", "seances:get", "seanceCategories:get"})
+     * @Groups({"seance:get", "seances:get", "seanceCategories:get", "seanceUsers:get"})
      */
     private $image;
 

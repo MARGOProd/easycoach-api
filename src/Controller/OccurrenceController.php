@@ -50,23 +50,23 @@ class OccurrenceController extends AbstractController
     {
         $serieExerciceRepository = $this->em->getRepository(SerieExercice::class);
         $exerciceRealiseRepository = $this->em->getRepository(ExerciceRealise::class);
-        if(isset($_GET["serie"]) && isset($_GET["occurrence"]))
+        if(isset($_GET["serie"]) && isset($_GET["occurrence"]) && isset($_GET["seanceUser"]))
         {
             if(isset($_GET["lap"]) && $_GET["lap"] != null)
             {
                 if(isset($_GET["minute"]) && $_GET["minute"] != null)
                 {
-                    $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"], 'lap' => $_GET["lap"], 'minute' => $_GET["minute"]]);
+                    $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"], 'seanceUser' => $_GET["seanceUser"], 'lap' => $_GET["lap"], 'minute' => $_GET["minute"]]);
                 }else{
-                    $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"], 'lap' => $_GET["lap"]]);
+                    $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"],'seanceUser' => $_GET["seanceUser"], 'lap' => $_GET["lap"]]);
                 }
 
             }else{
                 if(isset($_GET["minute"]) && $_GET["minute"] != null)
                 {
-                    $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"], 'minute' => $_GET["minute"]]);
+                    $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"],'seanceUser' => $_GET["seanceUser"], 'minute' => $_GET["minute"]]);
                 }else{
-                    $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"]]);
+                    $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"], 'seanceUser' => $_GET["seanceUser"],]);
                 }
             }
             if(isset($_GET["minute"]) && $_GET["minute"] != null)
@@ -93,14 +93,14 @@ class OccurrenceController extends AbstractController
                         }
                     }
                 }
-            }
+            }   
             $rep =[];
             foreach($serieExercices as &$value){
                 array_push($rep, $value);
             }
             $response = new Response($serializer->serialize($rep, 'json'), 200, ['Content-Type' => 'application/json+ld']);
         }else{
-            $response = new Response("'message : Serie Id ou Occurrence Id manquant'", 500, ['Content-Type' => 'application/json+ld']);
+            $response = new Response("'message : Serie Id ou Occurrence Id ou SeanceUser id manquant'", 500, ['Content-Type' => 'application/json+ld']);
         }
       
         return $response;
@@ -115,24 +115,24 @@ class OccurrenceController extends AbstractController
     public function getExerciceRealisesOccurrences(Request $request,  SerializerInterface $serializer)
     {
         $exerciceRealiseRepository = $this->em->getRepository(ExerciceRealise::class);
-        if(isset($_GET["serie"]) && isset($_GET["occurrence"]))
+        if(isset($_GET["serie"]) && isset($_GET["occurrence"]) && isset($_GET["seanceUser"]))
         {
             if(isset($_GET["lap"]) && $_GET["lap"] != null)
             {
                 if(isset($_GET["minute"]) && $_GET["minute"] != null)
                 {
-                    $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"], 'lap' => $_GET["lap"], 'minute' => $_GET["minute"]]);
+                    $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"],'seanceUser' => $_GET["seanceUser"], 'lap' => $_GET["lap"], 'minute' => $_GET["minute"]]);
                 }else{
-                    $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"], 'lap' => $_GET["lap"]]);
+                    $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"],'seanceUser' => $_GET["seanceUser"], 'lap' => $_GET["lap"]]);
                 }
 
             }else{
 
                 if(isset($_GET["minute"]) && $_GET["minute"] != null)
                 {
-                    $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"], 'minute' => $_GET["minute"]]);
+                    $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"],'seanceUser' => $_GET["seanceUser"], 'minute' => $_GET["minute"]]);
                 }else{
-                    $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"]]);
+                    $exerciceRealises = $exerciceRealiseRepository->findBy(['serie' => $_GET["serie"], 'occurrence' => $_GET["occurrence"], 'seanceUser' => $_GET["seanceUser"],]);
                 }
 
             }
