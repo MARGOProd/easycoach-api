@@ -5,9 +5,12 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\InscriptionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  normalizationContext={"groups"={"inscriptions:get"}, "skip_null_values" = false},
+ * )
  * @ORM\Entity(repositoryClass=InscriptionRepository::class)
  */
 class Inscription
@@ -16,12 +19,15 @@ class Inscription
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"inscriptions:get"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Seance::class, inversedBy="inscriptions")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"inscriptions:get"})
+     * @ApiSubresource
      */
     private $seance;
 

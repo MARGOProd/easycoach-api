@@ -28,7 +28,7 @@ class Seance implements OwnerForceInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"seanceUsers:get", "seance:post", "seance:get", "seances:get", "client:get", "serie:get", "series:get", "seanceSeries:get"})
+     * @Groups({"inscriptions:get","seanceUsers:get", "seance:post", "seance:get", "seances:get", "client:get", "serie:get", "series:get", "seanceSeries:get"})
      */
     private $id;
 
@@ -41,13 +41,13 @@ class Seance implements OwnerForceInterface
 
     /**
      * @ORM\Column(type="string",)
-     * @Groups({"seance:post", "seance:get", "seances:get", "client:get", "serie:get", "series:get", "seanceSeries:get", "seanceUsers:get"})
+     * @Groups({"inscriptions:get","seance:post", "seance:get", "seances:get", "client:get", "serie:get", "series:get", "seanceSeries:get", "seanceUsers:get"})
      */
     private $debut;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"seance:post","seance:get", "seances:get", "client:get", "serie:get", "series:get", "seanceSeries:get", "seanceUsers:get"})
+     * @Groups({"inscriptions:get", "seance:post","seance:get", "seances:get", "client:get", "serie:get", "series:get", "seanceSeries:get", "seanceUsers:get"})
      */
     private $libelle;
 
@@ -79,14 +79,14 @@ class Seance implements OwnerForceInterface
 
     /**
      * @ORM\ManyToOne(targetEntity=SeanceCategorie::class, inversedBy="seances")
-     * @Groups({"seances:get", "seance:get", "seanceUsers:get"})
+     * @Groups({"inscriptions:get","seances:get", "seance:get", "seanceUsers:get"})
      * @ApiSubresource
      */
     private $seanceCategorie;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"seances:get", "seance:get", "seanceUsers:get"})
+     * @Groups({"inscriptions:get","seances:get", "seance:get", "seanceUsers:get"})
      */
     private $image;
 

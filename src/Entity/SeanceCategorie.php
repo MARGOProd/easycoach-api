@@ -27,7 +27,7 @@ class SeanceCategorie
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get", "seances:get", "seanceCategories:get", "seanceUsers:get"})
+     * @Groups({"inscriptions:get","seance:get", "seances:get", "seanceCategories:get", "seanceUsers:get"})
      */
     private $id;
 
@@ -45,7 +45,7 @@ class SeanceCategorie
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"seance:get", "seances:get", "seanceCategories:get", "seanceUsers:get"})
+     * @Groups({"inscriptions:get","seance:get", "seances:get", "seanceCategories:get", "seanceUsers:get"})
      */
     private $libelle;
 
@@ -57,7 +57,7 @@ class SeanceCategorie
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"seance:get", "seances:get", "seanceCategories:get", "seanceUsers:get"})
+     * @Groups({"inscriptions:get", "seance:get", "seances:get", "seanceCategories:get", "seanceUsers:get"})
      */
     private $image;
 
