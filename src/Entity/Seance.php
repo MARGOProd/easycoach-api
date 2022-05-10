@@ -96,6 +96,11 @@ class Seance implements OwnerForceInterface
      */
     private $seanceUsers;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="seance")
+     */
+    private $inscriptions;
+
 
     public function __construct()
     {
@@ -103,6 +108,7 @@ class Seance implements OwnerForceInterface
         $this->seanceSeries = new ArrayCollection();
         $this->seanceMarques = new ArrayCollection();
         $this->seanceUsers = new ArrayCollection();
+        $this->inscriptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -308,6 +314,36 @@ class Seance implements OwnerForceInterface
     public function getnbSession()
     {
         return count($this->getSeanceUsers());
+    }
+
+    /**
+     * @return Collection|Inscription[]
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscription $inscription): self
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions[] = $inscription;
+            $inscription->setSeance($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscription $inscription): self
+    {
+        if ($this->inscriptions->removeElement($inscription)) {
+            // set the owning side to null (unless already changed)
+            if ($inscription->getSeance() === $this) {
+                $inscription->setSeance(null);
+            }
+        }
+
+        return $this;
     }
 
 }

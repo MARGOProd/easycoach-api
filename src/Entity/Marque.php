@@ -52,12 +52,18 @@ class Marque
      */
     private $seanceMarques;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="marque")
+     */
+    private $inscriptions;
+
     public function __construct()
     {
         $this->clients = new ArrayCollection();
         $this->exercices = new ArrayCollection();
         $this->userMarques = new ArrayCollection();
         $this->seanceMarques = new ArrayCollection();
+        $this->inscriptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -191,6 +197,36 @@ class Marque
             // set the owning side to null (unless already changed)
             if ($seanceMarque->getMarque() === $this) {
                 $seanceMarque->setMarque(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Inscription[]
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscription $inscription): self
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions[] = $inscription;
+            $inscription->setMarque($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscription $inscription): self
+    {
+        if ($this->inscriptions->removeElement($inscription)) {
+            // set the owning side to null (unless already changed)
+            if ($inscription->getMarque() === $this) {
+                $inscription->setMarque(null);
             }
         }
 
