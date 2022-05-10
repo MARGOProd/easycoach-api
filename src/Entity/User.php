@@ -112,6 +112,11 @@ class User implements UserInterface
      */
     private $inscriptions;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $pro;
+
 
     public function __construct()
     {
@@ -540,6 +545,18 @@ class User implements UserInterface
                 $inscription->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPro(): ?bool
+    {
+        return $this->pro;
+    }
+
+    public function setPro(?bool $pro): self
+    {
+        $this->pro = $pro;
 
         return $this;
     }
