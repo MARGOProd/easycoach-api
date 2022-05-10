@@ -12,6 +12,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *  normalizationContext={"groups"={"inscriptions:get"}, "skip_null_values" = false},
  * )
  * @ORM\Entity(repositoryClass=InscriptionRepository::class)
+ * @UniqueEntity(
+ *     fields={"seance" , "user"},
+ *     errorPath="Inscription",
+ *     message="User déjà inscript à cette séance."
+ * )
  */
 class Inscription
 {
