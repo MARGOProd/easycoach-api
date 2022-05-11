@@ -28,25 +28,25 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"device:get", "userMarques:get", "seanceUsers:get"})
+     * @Groups({"inscriptions:get", "device:get", "userMarques:get", "seanceUsers:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=150)
-     * @Groups({"device:get", "userMarques:get", "seanceUsers:get"})
+     * @Groups({"inscriptions:get", "device:get", "userMarques:get", "seanceUsers:get"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=150, nullable=true)
-     * @Groups({"device:get", "userMarques:get", "seanceUsers:get"})
+     * @Groups({"inscriptions:get", "device:get", "userMarques:get", "seanceUsers:get"})
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255,  unique=true)
-     * @Groups({"device:get", "userMarques:get", "seanceUsers:get"})
+     * @Groups({"inscriptions:get", "device:get", "userMarques:get", "seanceUsers:get"})
      */
     private $email;
 

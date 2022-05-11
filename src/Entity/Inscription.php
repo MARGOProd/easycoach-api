@@ -6,6 +6,11 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\InscriptionRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use App\Annotation\UserAware;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource(
@@ -17,6 +22,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     errorPath="Inscription",
  *     message="User déjà inscript à cette séance."
  * )
+ * @ApiFilter(SearchFilter::class, properties={"seance.seanceCategorie"="exact"})
+ * @UserAware(fieldName="user_id")
  */
 class Inscription
 {
@@ -38,6 +45,7 @@ class Inscription
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="inscriptions")
+     * @Groups({"inscriptions:get"})
      */
     private $user;
 

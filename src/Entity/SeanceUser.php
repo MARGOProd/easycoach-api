@@ -9,15 +9,18 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use Symfony\Component\Serializer\Annotation\Groups;
-
+use App\Entity\Traits\TimestampableTrait;
 /**
  * @ApiResource(
  *  normalizationContext={"groups"={"seanceUsers:get"}, "skip_null_values" = false},
  * )
  * @ORM\Entity(repositoryClass=SeanceUserRepository::class)
+ * @ORM\HasLifecycleCallbacks()
+ * 
  */
 class SeanceUser
 {
+    use TimestampableTrait;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -43,6 +46,7 @@ class SeanceUser
      * @ORM\OneToMany(targetEntity=ExerciceRealise::class, mappedBy="seanceUser")
      */
     private $exerciceRealises;
+
 
     public function __construct()
     {
@@ -106,6 +110,13 @@ class SeanceUser
         }
 
         return $this;
+    }
+
+    /**
+     * @Groups({"seanceUsers:get"})
+     */
+    public function getCreated(){
+        return $this->createdAt;
     }
 
 }

@@ -25,7 +25,8 @@ use ApiPlatform\Core\Filter\Validator\Length;
  * )
  * @ORM\Entity(repositoryClass=SerieRepository::class)
  * @ApiFilter(SearchFilter::class, properties={"seance"="exact"})
- * @ApiFilter(OrderFilter::class, properties={"id","ordre"}, arguments={"orderParameterName"="order"})
+ * @ApiFilter(OrderFilter::class, properties={"id","ordre"}, arguments={"orderParameterName"="ordre"})
+ * @ApiFilter(OrderFilter::class, properties={"ordre" : "ASC",}, arguments={"orderParameterName"="order"})
  * 
  */
 class Serie
