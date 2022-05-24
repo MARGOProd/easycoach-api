@@ -10,12 +10,18 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Entity\Traits\TimestampableTrait;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+
 /**
  * @ApiResource(
  *  normalizationContext={"groups"={"seanceUsers:get"}, "skip_null_values" = false},
  * )
  * @ORM\Entity(repositoryClass=SeanceUserRepository::class)
  * @ORM\HasLifecycleCallbacks()
+ * @ApiFilter(SearchFilter::class, properties={"user.id"="exact"})"})
+ * 
  * 
  */
 class SeanceUser
@@ -25,25 +31,26 @@ class SeanceUser
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"seanceUsers:get"})
+     * @Groups({"seanceUsers:get", "seance:get",})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Seance::class, inversedBy="seanceUsers")
-     * @Groups({"seanceUsers:get"})
+     * @Groups({"seanceUsers:get", "seance:get",})
      * @ApiSubresource
      */
     private $seance;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="seanceUsers")
-     * @Groups({"seanceUsers:get"})
+     * @Groups({"seanceUsers:get", "seance:get",})
      */
     private $user;
 
     /**
      * @ORM\OneToMany(targetEntity=ExerciceRealise::class, mappedBy="seanceUser")
+     * @ApiSubresource
      */
     private $exerciceRealises;
 
@@ -113,7 +120,7 @@ class SeanceUser
     }
 
     /**
-     * @Groups({"seanceUsers:get"})
+     * @Groups({"seanceUsers:get", "seance:get",})
      */
     public function getCreated(){
         return $this->createdAt;

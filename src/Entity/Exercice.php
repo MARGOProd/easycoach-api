@@ -93,6 +93,11 @@ class Exercice
      */
     private $userExercices;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=MediaObject::class)
+     */
+    private $media;
+
     public function __construct()
     {
         $this->exerciceMateriels = new ArrayCollection();
@@ -289,6 +294,18 @@ class Exercice
                 $userExercice->setExercice(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMedia(): ?MediaObject
+    {
+        return $this->media;
+    }
+
+    public function setMedia(?MediaObject $media): self
+    {
+        $this->media = $media;
 
         return $this;
     }

@@ -6,12 +6,15 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\SeanceSerieRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
 
 /**
  * @ApiResource(
  *  normalizationContext={"groups"={"seanceSeries:get"}, "skip_null_values" = false},
  * )
  * @ORM\Entity(repositoryClass=SeanceSerieRepository::class)
+ * @ApiFilter(OrderFilter::class, properties={"ordre" : "DESC",}, arguments={"orderParameterName"="order"})
  */
 class SeanceSerie
 {
@@ -39,6 +42,7 @@ class SeanceSerie
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"seanceSeries:get"})
      */
     private $ordre;
 

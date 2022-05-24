@@ -8,7 +8,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  denormalizationContext={"groups"={"tempo:post"}},
+ * )
  * @ORM\Entity(repositoryClass=TempoRepository::class)
  */
 class Tempo
@@ -17,25 +19,25 @@ class Tempo
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get"})
+     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get", "tempo:post"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get"})
+     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get", "tempo:post"})
      */
     private $descente;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get"})
+     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get", "tempo:post"})
      */
     private $static;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get"})
+     * @Groups({"seance:get", "exerciceRealises:get", "serie_exercices:get", "tempo:post"})
      */
     private $montee;
 
