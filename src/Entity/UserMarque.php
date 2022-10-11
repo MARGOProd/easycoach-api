@@ -14,7 +14,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  * @ApiResource(
  *  normalizationContext={"groups"={"userMarques:get"}, "skip_null_values" = false},
  * ) 
- * @ApiFilter(SearchFilter::class, properties={"user.nom"="partial", "user.prenom"="partial", "user.id"="exact"})
+ * @ApiFilter(SearchFilter::class, properties={"user.nom"="partial", "user.prenom"="partial", "user.id"="exact", "marque.libelle"="partial"})
  * @ApiFilter(OrderFilter::class, properties={"id", "prenom" : "DESC", "nom"}, arguments={"orderParameterName"="order"})
  * @ORM\Entity(repositoryClass=UserMarqueRepository::class)
  */
@@ -61,12 +61,12 @@ class UserMarque
 
     public function getMarque(): ?Marque
     {
-        return $this->Marque;
+        return $this->marque;
     }
 
     public function setMarque(?Marque $marque): self
     {
-        $this->Marque = $marque;
+        $this->marque = $marque;
 
         return $this;
     }
