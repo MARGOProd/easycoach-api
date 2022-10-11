@@ -98,7 +98,7 @@ class OccurrenceController extends AbstractController
             foreach($serieExercices as &$value){
                 array_push($rep, $value);
             }
-            $response = new Response($serializer->serialize($rep, 'json'), 200, ['Content-Type' => 'application/json+ld']);
+            $response = new Response($serializer->serialize($rep, 'json', ['groups'=> 'serie_exercices:get']), 200, ['Content-Type' => 'application/json+ld']);
         }else{
             $response = new Response("'message : Serie Id ou Occurrence Id ou SeanceUser id manquant'", 500, ['Content-Type' => 'application/json+ld']);
         }
@@ -136,7 +136,7 @@ class OccurrenceController extends AbstractController
                 }
 
             }
-            $response = new Response($serializer->serialize($exerciceRealises, 'json'), 200, ['Content-Type' => 'application/json+ld']);
+            $response = new Response($serializer->serialize($exerciceRealises, 'json', ['groups'=> 'exerciceRealises:get']), 200, ['Content-Type' => 'application/json+ld']);
         }else{
             $response = new Response("'message : Serie Id ou Occurrence Id manquante'", 500, ['Content-Type' => 'application/json+ld']);
         }

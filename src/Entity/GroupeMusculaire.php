@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 
 /**
  * @ApiResource(
@@ -21,19 +22,20 @@ class GroupeMusculaire
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"groupeMusculaires:get", "seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "commentaireMuscles:get"})
+     * @Groups({"groupeMusculaires:get", "seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "commentaireMuscles:get", "exerciceMuscle:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"groupeMusculaires:get", "seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get"})
+     * @Groups({"groupeMusculaires:get", "seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "exerciceMuscle:get"})
      */
     private $libelle;
 
     /**
      * @ORM\OneToMany(targetEntity=Muscle::class, mappedBy="groupeMusculaire")
      * @Groups({"groupeMusculaires:get"})
+     * @ApiSubresource
      */
     private $muscles;
 

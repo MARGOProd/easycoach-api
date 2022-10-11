@@ -22,7 +22,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *     errorPath="Inscription",
  *     message="User déjà inscript à cette séance."
  * )
- * @ApiFilter(SearchFilter::class, properties={"seance.seanceCategorie"="exact"})
+ * @ApiFilter(SearchFilter::class, properties={"seance.seanceCategorie"="exact", "user.nom"="exact", "seance.id"="exact"  })
  * @UserAware(fieldName="user_id")
  */
 class Inscription
@@ -39,7 +39,6 @@ class Inscription
      * @ORM\ManyToOne(targetEntity=Seance::class, inversedBy="inscriptions")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"inscriptions:get"})
-     * @ApiSubresource
      */
     private $seance;
 

@@ -26,20 +26,20 @@ class ExerciceCategorie
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"exerciceCategories:get", "exercice:get", "exercices:get", "exercice:post"})
+     * @Groups({"exerciceCategories:get", "exercice:get", "exercices:get", "exercice:post", "exerciceMuscle:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"exerciceCategories:get", "exercice:get", "exercices:get", "exercice:post"})
+     * @Groups({"exerciceCategories:get", "exercice:get", "exercices:get", "exercice:post", "exerciceMuscle:get"})
      * 
      */
     private $libelle;
 
     /**
      * @ORM\ManyToOne(targetEntity=ExerciceCategorie::class, inversedBy="exerciceCategories")
-     * @Groups({"exerciceCategories:get"})
+     * @Groups({"exerciceCategories:get", "exerciceMuscle:get"})
      */
     private $parent;
 

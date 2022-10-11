@@ -37,13 +37,13 @@ class Exercice
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user_exercices:get","exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get", "serie_exercices:get"})
+     * @Groups({"user_exercices:get","exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get", "serie_exercices:get", "exerciceMuscle:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user_exercices:get","exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get", "serie_exercices:get"})
+     * @Groups({"user_exercices:get","exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get", "serie_exercices:get", "exerciceMuscle:get"})
      */
     private $libelle;
 
@@ -59,7 +59,7 @@ class Exercice
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"user_exercices:get", "exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get", "serie_exercices:get"})
+     * @Groups({"user_exercices:get", "exercice:post", "seance:get", "exerciceRealises:get", "serie:get", "series:get", "exercice:get", "exercices:get", "serie_exercices:get", "exerciceMuscle:get"})
      */
     private $descriptif;
 
@@ -84,7 +84,7 @@ class Exercice
 
     /**
      * @ORM\ManyToOne(targetEntity=ExerciceCategorie::class, inversedBy="exercices")
-     * @Groups({"exercice:get", "exercices:get", "exercice:post",})
+     * @Groups({"exercice:get", "exercices:get", "exercice:post", "exerciceMuscle:get"})
      */
     private $exerciceCategorie;
 
@@ -95,6 +95,7 @@ class Exercice
 
     /**
      * @ORM\ManyToOne(targetEntity=MediaObject::class)
+     * @Groups({"user_exercices:get","exercice:post","exerciceRealises:get", "exercice:get", "exercices:get", "serie_exercices:get", "exerciceMuscle:get"})
      */
     private $media;
 

@@ -21,25 +21,25 @@ class Muscle
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "groupeMusculaires:get", "commentaireMuscles:get" })
+     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "groupeMusculaires:get", "commentaireMuscles:get", "exerciceMuscle:get" })
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "groupeMusculaires:get", "commentaireMuscles:get"})
+     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "groupeMusculaires:get", "commentaireMuscles:get", "exerciceMuscle:get"})
      */
     private $libelle;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get"})
+     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "exerciceMuscle:get"})
      */
     private $description;
 
     /**
      * @ORM\ManyToOne(targetEntity=GroupeMusculaire::class, inversedBy="muscles")
-     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "commentaireMuscles:get"})
+     * @Groups({"seance:get", "serie:get", "exercice:get", "muscle:get", "exercices:get", "client:get", "commentaireMuscles:get", "exerciceMuscle:get"})
      */
     private $groupeMusculaire;
 

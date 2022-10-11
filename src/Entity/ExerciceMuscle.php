@@ -10,9 +10,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  normalizationContext={"groups"={"exerciceMuscle:get"}, "skip_null_values" = false},
+ * 
+ * )
  * @ORM\Entity(repositoryClass=ExerciceMuscleRepository::class) 
- * @ApiFilter(SearchFilter::class, properties={"exercice"="exact", "muscle"="exact", "isDirect"="exact"})
+ * @ApiFilter(SearchFilter::class, properties={"exercice"="exact", "muscle"="exact", "isDirect"="exact", "muscle.groupeMusculaire"="exact"})
  * @UniqueEntity(
  *     fields={"exercice" , "muscle", "isDirect"},
  *     errorPath="ExerciceMuscle",
@@ -25,26 +28,27 @@ class ExerciceMuscle
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"exercice:get"})
+     * @Groups({"exercice:get","exerciceMuscle:get"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Exercice::class)
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"exercice:get", "exerciceMuscle:get"})
      */
     private $exercice;
 
     /**
      * @ORM\ManyToOne(targetEntity=Muscle::class, inversedBy="exerciceMuscles")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"exercice:get"})
+     * @Groups({"exercice:get", "exerciceMuscle:get"})
      */
     private $muscle;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"exercice:get"})
+     * @Groups({"exercice:get", "exerciceMuscle:get"})
      */
     private $isDirect;
 

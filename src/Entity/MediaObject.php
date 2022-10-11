@@ -56,7 +56,7 @@ class MediaObject
     * @ORM\Column(type="integer")
     * @ORM\GeneratedValue
     * @ORM\Id
-    * @Groups({"resellers:get", "reseller:get", "user:get", "etude:get", "media_object_read"})
+    * @Groups({"user_exercices:get","exercice:post","exerciceRealises:get", "exercice:get", "exercices:get", "serie_exercices:get"})
     */
    protected $id;
 
@@ -64,7 +64,7 @@ class MediaObject
     * @var string|null
     *
     * @ApiProperty(iri="http://schema.org/contentUrl")
-    * @Groups({"resellers:get", "reseller:get", "user:get", "etude:get", "media_object_read"})
+    * @Groups({"user_exercices:get","exercice:post","exerciceRealises:get", "exercice:get", "exercices:get", "serie_exercices:get"})
     */
    public $contentUrl;
 
@@ -80,7 +80,7 @@ class MediaObject
     * @var string|null
     *
     * @ORM\Column(nullable=true)
-    * @Groups({"resellers:get", "reseller:get", "user:get", "etude:get", "media_object_read"})
+    * @Groups({"user_exercices:get","exercice:post","exerciceRealises:get", "exercice:get", "exercices:get", "serie_exercices:get"})
     */
    public $filePath;
 

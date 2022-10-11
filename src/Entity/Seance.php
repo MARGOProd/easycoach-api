@@ -79,7 +79,7 @@ class Seance implements OwnerForceInterface
 
     /**
      * @ORM\ManyToOne(targetEntity=SeanceCategorie::class, inversedBy="seances")
-     * @Groups({"inscriptions:get","seances:get", "seance:get", "seanceUsers:get"})
+     * @Groups({"seance:post", "inscriptions:get","seances:get", "seance:get", "seanceUsers:get"})
      * @ApiSubresource
      */
     private $seanceCategorie;
@@ -98,6 +98,7 @@ class Seance implements OwnerForceInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Inscription::class, mappedBy="seance")
+     * @ApiSubresource
      */
     private $inscriptions;
 
