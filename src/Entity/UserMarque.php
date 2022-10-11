@@ -40,7 +40,7 @@ class UserMarque
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"userMarques:get"})
      */
-    private $Marque;
+    private $marque;
 
     public function getId(): ?int
     {
@@ -64,9 +64,9 @@ class UserMarque
         return $this->Marque;
     }
 
-    public function setMarque(?Marque $Marque): self
+    public function setMarque(?Marque $marque): self
     {
-        $this->Marque = $Marque;
+        $this->Marque = $marque;
 
         return $this;
     }
